@@ -67,6 +67,15 @@ input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(47,139,255,.2)}
 .hint{color:var(--muted);font-size:.8rem;margin-top:6px;line-height:1.4}
 .msg{margin-top:14px;padding:10px 12px;border-radius:10px;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.5);color:#ff9a9a;font-size:.92rem}
 button:disabled{opacity:.6;cursor:wait}
-.userbox{display:flex;align-items:center;gap:10px}
-.userbox span{color:var(--muted);font-size:.9rem;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.userbox button{margin:0;width:auto;padding:8px 12px;font-size:.85rem;background:#13203d;border:1px solid var(--line)}
+/* KULLANICI MENÜSÜ */
+.umenu{position:relative}
+.avatarbtn{margin:0;width:44px;height:44px;padding:0;border-radius:50%;overflow:hidden;border:2px solid var(--blue);background:#0f3d99;display:grid;place-items:center;box-shadow:0 0 14px rgba(47,139,255,.5)}
+.avatarbtn img{width:100%;height:100%;display:block;image-rendering:pixelated}
+.avatarbtn span{font-weight:900;font-size:1.1rem}
+.overlay{position:fixed;inset:0;z-index:20}
+.dropdown{position:absolute;right:0;top:54px;z-index:30;min-width:210px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+.dropdown .dname{padding:8px 10px 10px;font-weight:800;border-bottom:1px solid var(--line);margin-bottom:8px;word-break:break-all}
+.dropdown button{margin:4px 0 0;background:#13203d;border:1px solid var(--line);text-align:left;padding:10px 12px;font-size:.95rem}
+.dropdown button:hover{border-color:var(--blue)}
+.modal{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.7);display:grid;place-items:center;padding:16px}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}

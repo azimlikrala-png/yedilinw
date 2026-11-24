@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { USERNAME_RE, registerUser, loginUser } from "../../../lib/authme";
-import { createSession, destroySession } from "../../../lib/session";
+import { USERNAME_RE, registerUser, loginUser, changePassword } from "../../../lib/authme";
+import { createSession, destroySession, getSession } from "../../../lib/session";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +14,7 @@ function tooMany(ip) {
   list.push(now);
   hits.set(ip, list);
   if (hits.size > 5000) hits.clear();
-  return list.length > 10;
+  return list.length > 5; // dakikada en fazla 5 deneme
 }
 
 export async function POST(request) {
@@ -36,6 +36,18 @@ export async function POST(request) {
     const username = String(body.username || "").trim();
     const password = String(body.password || "");
     if (password.length > 128) return fail("Şifre çok uzun", 400);
+
+    if (body.action === "changepw") {
+      const session = await getSession();
+      if (!session) return fail("Önce giriş yapmalısın", 401);
+      if (password.length < 8) return fail("Yeni şifre en az 8 karakter olmalı", 400);
+      if (password !== String(body.password2 || "")) return fail("Şifreler eşleşmiyor", 400);
+      const current = String(body.current || "");
+      const user = current.length <= 128 ? await loginUser(session.username, current) : null;
+      if (!user) return fail("Mevcut şifre hatalı", 401);
+      await changePassword(session.username, password);
+      return NextResponse.json({ ok: true });
+    }
 
     if (body.action === "login") {
       if (!USERNAME_RE.test(username) || !password) {
