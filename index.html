@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yedili Network | Minecraft Sunucusu</title>
+<link rel="icon" href="/logo.jpg">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#05080f;--panel:#0b1220;--line:#16264a;--blue:#2f8bff;--cyan:#5cc8ff;--text:#e8f0ff;--muted:#8da2c4}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;
+  background-image:radial-gradient(900px 500px at 50% -10%,rgba(47,139,255,.22),transparent 70%),radial-gradient(600px 400px at 100% 100%,rgba(92,200,255,.08),transparent 70%)}
+a{color:inherit;text-decoration:none}
+
+/* ÜST MENÜ */
+header{position:sticky;top:0;z-index:10;background:rgba(5,8,15,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+.brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;box-shadow:0 0 14px rgba(47,139,255,.6)}
+.brand span{font-size:1.05rem}
+.brand b{color:var(--cyan)}
+nav{display:flex;gap:6px}
+nav a{padding:8px 14px;border-radius:10px;color:var(--muted);font-weight:600;font-size:.95rem;transition:.2s}
+nav a:hover{color:var(--text);background:rgba(47,139,255,.12)}
+nav a.active{color:#fff;background:linear-gradient(135deg,#1f6fe0,#2f8bff);box-shadow:0 0 14px rgba(47,139,255,.45)}
+
+/* İÇERİK */
+main{flex:1;width:100%;max-width:1000px;margin:0 auto;padding:36px 16px 48px}
+.hero{text-align:center;padding:28px 0 8px}
+.hero .logo{width:150px;height:150px;border-radius:50%;object-fit:cover;box-shadow:0 0 40px rgba(47,139,255,.6);margin-bottom:18px}
+h1{font-size:clamp(2rem,7vw,3.2rem);font-weight:900;letter-spacing:1px;line-height:1.1}
+h1 .net{display:block;font-size:.4em;letter-spacing:.55em;color:var(--cyan);margin-top:8px}
+.lead{color:var(--muted);max-width:480px;margin:16px auto 0;line-height:1.6}
+.badge{display:inline-block;margin-top:18px;padding:7px 16px;border:1px solid var(--blue);border-radius:999px;color:var(--cyan);font-weight:700;font-size:.9rem;background:rgba(47,139,255,.1)}
+h2.title{text-align:center;margin:44px 0 20px;font-size:1.4rem}
+h2.title::after{content:"";display:block;width:60px;height:3px;margin:10px auto 0;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{background:linear-gradient(180deg,var(--panel),#070c17);border:1px solid var(--line);border-radius:16px;padding:20px;transition:.25s}
+.card:hover{border-color:var(--blue);box-shadow:0 0 24px rgba(47,139,255,.25);transform:translateY(-2px)}
+.card h3{color:var(--cyan);margin-bottom:12px;font-size:1.1rem}
+.row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.row:last-of-type{border-bottom:0}
+.row span:first-child{color:var(--muted)}
+.row span:last-child{font-family:ui-monospace,Menlo,monospace;word-break:break-all;text-align:right}
+button{margin-top:14px;width:100%;padding:11px;border:0;border-radius:10px;background:linear-gradient(135deg,#1f6fe0,#2f8bff);color:#fff;font-weight:700;font-size:1rem;cursor:pointer;transition:.2s}
+button:hover{filter:brightness(1.15)}
+
+/* YETKİLİLER */
+.staff{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.member{text-align:center;padding:28px 20px}
+.avatar{width:84px;height:84px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-size:2rem;font-weight:900;color:#fff;background:linear-gradient(135deg,#0f3d99,#2f8bff);box-shadow:0 0 20px rgba(47,139,255,.5)}
+.role{display:inline-block;padding:5px 14px;border-radius:999px;font-weight:800;font-size:.8rem;letter-spacing:.12em;margin-bottom:12px}
+.role.kurucu{background:rgba(255,196,60,.12);color:#ffcf5a;border:1px solid rgba(255,196,60,.5)}
+.role.admin{background:rgba(255,80,80,.12);color:#ff7a7a;border:1px solid rgba(255,80,80,.5)}
+.role.gelistirici{background:rgba(92,200,255,.12);color:var(--cyan);border:1px solid rgba(92,200,255,.5)}
+.member .name{font-size:1.2rem;font-weight:800;word-break:break-all}
+
+footer{border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.85rem;padding:20px 16px}
+@media(max-width:520px){.brand span{font-size:.9rem}nav a{padding:8px 10px;font-size:.88rem}.brand img{width:38px;height:38px}}
+
+/* GİRİŞ / KAYIT */
+.authwrap{display:grid;place-items:center;flex:1;width:100%;padding:24px 16px}
+.authcard{width:100%;max-width:400px;background:linear-gradient(180deg,var(--panel),#070c17);border:1px solid var(--line);border-radius:18px;padding:26px 22px;box-shadow:0 0 40px rgba(47,139,255,.18);text-align:center}
+.authcard .logo{width:96px;height:96px;border-radius:50%;object-fit:cover;box-shadow:0 0 28px rgba(47,139,255,.6);margin-bottom:12px}
+.authcard h1{font-size:1.7rem}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#060b16;border:1px solid var(--line);border-radius:12px;padding:5px;margin:20px 0 16px}
+.tabs button{margin:0;padding:10px;background:transparent;color:var(--muted);border-radius:8px}
+.tabs button.on{background:linear-gradient(135deg,#1f6fe0,#2f8bff);color:#fff;box-shadow:0 0 14px rgba(47,139,255,.4)}
+form{text-align:left}
+label{display:block;margin:12px 0 6px;color:var(--muted);font-size:.9rem;font-weight:600}
+input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:#060b16;color:var(--text);font-size:1rem;outline:none}
+input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(47,139,255,.2)}
+.hint{color:var(--muted);font-size:.8rem;margin-top:6px;line-height:1.4}
+.msg{margin-top:14px;padding:10px 12px;border-radius:10px;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.5);color:#ff9a9a;font-size:.92rem}
+button:disabled{opacity:.6;cursor:wait}
+/* KULLANICI MENÜSÜ */
+.umenu{position:relative}
+.avatarbtn{margin:0;width:44px;height:44px;padding:0;border-radius:50%;overflow:hidden;border:2px solid var(--blue);background:#0f3d99;display:grid;place-items:center;box-shadow:0 0 14px rgba(47,139,255,.5)}
+.avatarbtn img{width:100%;height:100%;display:block;image-rendering:pixelated}
+.avatarbtn span{font-weight:900;font-size:1.1rem}
+.overlay{position:fixed;inset:0;z-index:20}
+.dropdown{position:absolute;right:0;top:54px;z-index:30;min-width:210px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+.dropdown .dname{padding:8px 10px 10px;font-weight:800;border-bottom:1px solid var(--line);margin-bottom:8px;word-break:break-all}
+.dropdown button{margin:4px 0 0;background:#13203d;border:1px solid var(--line);text-align:left;padding:10px 12px;font-size:.95rem}
+.dropdown button:hover{border-color:var(--blue)}
+.modal{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.7);display:grid;place-items:center;padding:16px}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
+
+nav a{cursor:pointer}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
+
+<!-- GİRİŞ / KAYIT -->
+<main class="authwrap" id="auth" hidden>
+  <div class="authcard">
+    <img class="logo" src="/logo.jpg" alt="Yedili Network">
+    <h1>YEDİLİ NETWORK</h1>
+    <div class="tabs">
+      <button type="button" id="tabLogin" class="on">Giriş Yap</button>
+      <button type="button" id="tabReg">Kayıt Ol</button>
+    </div>
+    <form id="authForm">
+      <label for="username">Kullanıcı adı</label>
+      <input id="username" name="username" required maxlength="16" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
+      <div class="hint" id="hintUser" hidden>4-16 karakter; harf, rakam ve _ . Bedrock oyuncuları başa tek nokta (.) koyabilir.</div>
+      <label for="password">Şifre</label>
+      <input id="password" name="password" type="password" required autocomplete="current-password">
+      <div id="regExtra" hidden>
+        <label for="password2">Şifre tekrar</label>
+        <input id="password2" name="password2" type="password" autocomplete="new-password">
+        <div class="hint">Şifre en az 8 karakter olmalı. Oyundaki /login şifren de bu olacak.</div>
+      </div>
+      <div class="msg" id="authMsg" hidden></div>
+      <button type="submit" id="authBtn">Giriş Yap</button>
+    </form>
+  </div>
+</main>
+
+<!-- SİTE -->
+<div id="app" hidden>
+  <header>
+    <div class="nav">
+      <a class="brand" href="#/"><img src="/logo.jpg" alt="Yedili Network logo"><span>YEDİLİ <b>NETWORK</b></span></a>
+      <nav>
+        <a href="#/" id="navHome">Ana Sayfa</a>
+        <a href="#/yetkililer" id="navStaff">Yetkililer</a>
+      </nav>
+      <div class="umenu">
+        <button type="button" class="avatarbtn" id="avBtn" aria-label="Hesap menüsü"></button>
+        <div class="overlay" id="ov" hidden></div>
+        <div class="dropdown" id="dd" hidden>
+          <div class="dname" id="dName"></div>
+          <button type="button" id="openPw">Şifre Değiştir</button>
+          <button type="button" id="logoutBtn">Çıkış Yap</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="pageHome">
+    <section class="hero">
+      <img class="logo" src="/logo.jpg" alt="Yedili Network">
+      <h1>YEDİLİ<span class="net">NETWORK</span></h1>
+      <p class="lead">Hoş geldin, <b id="welcome"></b>! Java ve Bedrock oyuncuları birlikte aynı sunucuda oynayabilir.</p>
+      <span class="badge">Sürüm: 1.21.5x</span>
+    </section>
+    <h2 class="title">Nasıl Bağlanılır?</h2>
+    <section class="cards">
+      <div class="card">
+        <h3>Java Edition</h3>
+        <div class="row"><span>Adres</span><span>yedilinw.mangoohost.live</span></div>
+        <button type="button" class="copy">Adresi Kopyala</button>
+      </div>
+      <div class="card">
+        <h3>Bedrock Edition</h3>
+        <div class="row"><span>Adres</span><span>yedilinw.mangoohost.live</span></div>
+        <div class="row"><span>Port</span><span>22992</span></div>
+        <button type="button" class="copy">Adresi Kopyala</button>
+      </div>
+    </section>
+  </main>
+
+  <main id="pageStaff" hidden>
+    <h2 class="title" style="margin-top:8px">Yetkililer</h2>
+    <section class="staff">
+      <div class="card member"><div class="avatar">G</div><span class="role kurucu">KURUCU</span><div class="name">geckocraft88117</div></div>
+      <div class="card member"><div class="avatar">E</div><span class="role admin">ADMİN</span><div class="name">Eren_6331</div></div>
+      <div class="card member"><div class="avatar">A</div><span class="role gelistirici">GELİŞTİRİCİ</span><div class="name">.alemdeVENOM</div></div>
+    </section>
+  </main>
+
+  <footer>© Yedili Network</footer>
+
+  <!-- ŞİFRE DEĞİŞTİR -->
+  <div class="modal" id="pwModal" hidden>
+    <div class="authcard">
+      <h1 style="font-size:1.3rem">Şifre Değiştir</h1>
+      <p class="lead" id="pwDone" style="margin-top:16px" hidden>Şifren değiştirildi. Oyunda yeni şifrenle giriş yapabilirsin.</p>
+      <form id="pwForm">
+        <label for="cur">Mevcut şifre</label>
+        <input id="cur" name="current" type="password" required autocomplete="current-password">
+        <label for="n1">Yeni şifre</label>
+        <input id="n1" name="password" type="password" required minlength="8" autocomplete="new-password">
+        <label for="n2">Yeni şifre tekrar</label>
+        <input id="n2" name="password2" type="password" required minlength="8" autocomplete="new-password">
+        <div class="hint">Yeni şifre en az 8 karakter olmalı.</div>
+        <div class="msg" id="pwMsg" hidden></div>
+        <button type="submit" id="pwBtn">Şifreyi Güncelle</button>
+      </form>
+      <button type="button" class="ghost" id="pwClose">Vazgeç</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var $ = function (s) { return document.querySelector(s); };
+var me = null;
+var mode = "login";
+var GENERIC = "Bir hata oluştu, tekrar dene";
+
+function api(body) {
+  return fetch("/api/auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+    .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok, d: d }; }); })
+    .catch(function () { return { ok: false, d: { error: GENERIC } }; });
+}
+function show(el, on) { el.hidden = !on; }
+function msg(el, text) { el.textContent = text || ""; show(el, !!text); }
+
+/* ---- Giriş / Kayıt ---- */
+function setMode(m) {
+  mode = m;
+  $("#tabLogin").className = m === "login" ? "on" : "";
+  $("#tabReg").className = m === "register" ? "on" : "";
+  show($("#regExtra"), m === "register");
+  show($("#hintUser"), m === "register");
+  $("#password2").required = m === "register";
+  $("#password").minLength = m === "register" ? 8 : 0;
+  $("#password").autocomplete = m === "register" ? "new-password" : "current-password";
+  $("#authBtn").textContent = m === "login" ? "Giriş Yap" : "Kayıt Ol";
+  msg($("#authMsg"), "");
+}
+$("#tabLogin").onclick = function () { setMode("login"); };
+$("#tabReg").onclick = function () { setMode("register"); };
+
+$("#authForm").onsubmit = function (e) {
+  e.preventDefault();
+  msg($("#authMsg"), "");
+  var btn = $("#authBtn"); btn.disabled = true;
+  api({ action: mode, username: $("#username").value, password: $("#password").value, password2: $("#password2").value })
+    .then(function (r) {
+      if (r.ok) { location.hash = "#/"; init(); return; }
+      msg($("#authMsg"), r.d.error || GENERIC);
+      btn.disabled = false;
+    });
+};
+
+/* ---- Site ---- */
+function route() {
+  var staff = location.hash === "#/yetkililer";
+  show($("#pageHome"), !staff);
+  show($("#pageStaff"), staff);
+  $("#navHome").className = staff ? "" : "active";
+  $("#navStaff").className = staff ? "active" : "";
+}
+window.addEventListener("hashchange", route);
+
+function setAvatar(name) {
+  var b = $("#avBtn");
+  b.textContent = "";
+  var img = document.createElement("img");
+  img.alt = name; img.width = 40; img.height = 40;
+  img.src = "https://mc-heads.net/avatar/" + encodeURIComponent(name) + "/64";
+  img.onerror = function () {
+    b.textContent = "";
+    var s = document.createElement("span");
+    s.textContent = name.replace(/^\./, "").charAt(0).toUpperCase();
+    b.appendChild(s);
+  };
+  b.appendChild(img);
+}
+
+function render() {
+  show($("#auth"), !me);
+  show($("#app"), !!me);
+  if (!me) return;
+  $("#welcome").textContent = me.realname;
+  $("#dName").textContent = me.realname;
+  setAvatar(me.realname);
+  route();
+}
+
+function init() {
+  api({ action: "me" }).then(function (r) {
+    me = r.d && r.d.user ? r.d.user : null;
+    btnReset();
+    render();
+  });
+}
+function btnReset() { $("#authBtn").disabled = false; $("#authForm").reset(); setMode("login"); }
+
+/* ---- Menü ---- */
+function menu(on) { show($("#dd"), on); show($("#ov"), on); }
+$("#avBtn").onclick = function () { menu($("#dd").hidden); };
+$("#ov").onclick = function () { menu(false); };
+$("#logoutBtn").onclick = function () {
+  api({ action: "logout" }).then(function () { me = null; menu(false); location.hash = "#/"; render(); });
+};
+
+/* ---- Şifre değiştir ---- */
+function pwModal(on) {
+  show($("#pwModal"), on);
+  if (on) { $("#pwForm").reset(); show($("#pwForm"), true); show($("#pwDone"), false); msg($("#pwMsg"), ""); $("#pwClose").textContent = "Vazgeç"; }
+}
+$("#openPw").onclick = function () { menu(false); pwModal(true); };
+$("#pwClose").onclick = function () { pwModal(false); };
+$("#pwForm").onsubmit = function (e) {
+  e.preventDefault();
+  msg($("#pwMsg"), "");
+  var btn = $("#pwBtn"); btn.disabled = true;
+  api({ action: "changepw", current: $("#cur").value, password: $("#n1").value, password2: $("#n2").value })
+    .then(function (r) {
+      btn.disabled = false;
+      if (r.ok) { show($("#pwForm"), false); show($("#pwDone"), true); $("#pwClose").textContent = "Tamam"; return; }
+      msg($("#pwMsg"), r.d.error || GENERIC);
+    });
+};
+
+/* ---- Kopyala ---- */
+document.querySelectorAll(".copy").forEach(function (b) {
+  b.onclick = function () {
+    var old = b.textContent, text = "yedilinw.mangoohost.live";
+    function ok() { b.textContent = "Kopyalandı!"; setTimeout(function () { b.textContent = old; }, 1500); }
+    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(ok, ok); }
+    else { var t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); ok(); }
+  };
+});
+
+setMode("login");
+init();
+</script>
+</body>
+</html>
