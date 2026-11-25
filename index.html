@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,98 +7,134 @@
 <link rel="icon" href="/logo.jpg">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#05080f;--panel:#0b1220;--line:#16264a;--blue:#2f8bff;--cyan:#5cc8ff;--text:#e8f0ff;--muted:#8da2c4}
+:root{
+  --bg:#05080f;--panel:#0b1220;--panel2:#070c17;--line:#16264a;--blue:#2f8bff;--cyan:#5cc8ff;
+  --text:#e8f0ff;--muted:#8da2c4;--input:#060b16;--head:rgba(5,8,15,.88);--chip:#13203d;--glow:rgba(47,139,255,.22);
+  --gold:#ffcf5a;--goldbg:rgba(255,196,60,.12);--red:#ff7a7a;--redbg:rgba(255,80,80,.12);--rolecyan:#5cc8ff;--cyanbg:rgba(92,200,255,.12);
+  --shadow:rgba(0,0,0,.6)
+}
+[data-theme="light"]{
+  --bg:#f2f7ff;--panel:#ffffff;--panel2:#f6f9ff;--line:#cddcf5;--blue:#1f6fe0;--cyan:#0a7bc4;
+  --text:#0b1630;--muted:#586a8c;--input:#f3f7ff;--head:rgba(242,247,255,.92);--chip:#e6eefc;--glow:rgba(47,139,255,.2);
+  --gold:#9a6a00;--goldbg:rgba(255,196,60,.22);--red:#c23a3a;--redbg:rgba(255,80,80,.14);--rolecyan:#0a6fb0;--cyanbg:rgba(10,123,196,.12);
+  --shadow:rgba(30,60,120,.25)
+}
 html{scroll-behavior:smooth}
 body{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;
-  background-image:radial-gradient(900px 500px at 50% -10%,rgba(47,139,255,.22),transparent 70%),radial-gradient(600px 400px at 100% 100%,rgba(92,200,255,.08),transparent 70%)}
+  background-image:radial-gradient(900px 500px at 50% -10%,var(--glow),transparent 70%),radial-gradient(600px 400px at 100% 100%,rgba(92,200,255,.08),transparent 70%);
+  transition:background-color .25s,color .25s}
 a{color:inherit;text-decoration:none}
+[hidden]{display:none !important}
 
-/* ÜST MENÜ */
-header{position:sticky;top:0;z-index:10;background:rgba(5,8,15,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px}
+/* ÜST ÇUBUK */
+header{position:sticky;top:0;z-index:10;background:var(--head);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 14px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px;margin-inline-end:auto}
 .brand img{width:44px;height:44px;border-radius:50%;object-fit:cover;box-shadow:0 0 14px rgba(47,139,255,.6)}
-.brand span{font-size:1.05rem}
+.brand span{font-size:1.02rem}
 .brand b{color:var(--cyan)}
-nav{display:flex;gap:6px}
-nav a{padding:8px 14px;border-radius:10px;color:var(--muted);font-weight:600;font-size:.95rem;transition:.2s}
-nav a:hover{color:var(--text);background:rgba(47,139,255,.12)}
-nav a.active{color:#fff;background:linear-gradient(135deg,#1f6fe0,#2f8bff);box-shadow:0 0 14px rgba(47,139,255,.45)}
+.tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sel{position:relative;display:flex;align-items:center}
+.sel select{appearance:none;-webkit-appearance:none;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 30px 9px 12px;font-size:.92rem;font-weight:600;cursor:pointer;max-width:170px}
+[dir="rtl"] .sel select{padding:9px 12px 9px 30px}
+.sel::after{content:"▾";position:absolute;inset-inline-end:10px;pointer-events:none;color:var(--muted);font-size:.8rem}
+.sel select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(47,139,255,.2)}
+.sel .ic{position:absolute;inset-inline-start:10px;pointer-events:none;font-size:.9rem}
+.sel.has-ic select{padding-inline-start:32px}
+.iconbtn{position:relative;margin:0;width:40px;height:40px;padding:0;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:1.1rem;cursor:pointer;display:grid;place-items:center}
+.iconbtn:hover{border-color:var(--blue)}
+.badge-dot{position:absolute;top:-5px;inset-inline-end:-5px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#ff4d4d;color:#fff;font-size:.7rem;font-weight:800;display:grid;place-items:center}
 
 /* İÇERİK */
-main{flex:1;width:100%;max-width:1000px;margin:0 auto;padding:36px 16px 48px}
-.hero{text-align:center;padding:28px 0 8px}
+main{flex:1;width:100%;max-width:1000px;margin:0 auto;padding:30px 16px 48px}
+.hero{text-align:center;padding:20px 0 8px}
 .hero .logo{width:150px;height:150px;border-radius:50%;object-fit:cover;box-shadow:0 0 40px rgba(47,139,255,.6);margin-bottom:18px}
 h1{font-size:clamp(2rem,7vw,3.2rem);font-weight:900;letter-spacing:1px;line-height:1.1}
 h1 .net{display:block;font-size:.4em;letter-spacing:.55em;color:var(--cyan);margin-top:8px}
 .lead{color:var(--muted);max-width:480px;margin:16px auto 0;line-height:1.6}
 .badge{display:inline-block;margin-top:18px;padding:7px 16px;border:1px solid var(--blue);border-radius:999px;color:var(--cyan);font-weight:700;font-size:.9rem;background:rgba(47,139,255,.1)}
-h2.title{text-align:center;margin:44px 0 20px;font-size:1.4rem}
+h2.title{text-align:center;margin:40px 0 20px;font-size:1.4rem}
 h2.title::after{content:"";display:block;width:60px;height:3px;margin:10px auto 0;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--cyan))}
-
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-.card{background:linear-gradient(180deg,var(--panel),#070c17);border:1px solid var(--line);border-radius:16px;padding:20px;transition:.25s}
-.card:hover{border-color:var(--blue);box-shadow:0 0 24px rgba(47,139,255,.25);transform:translateY(-2px)}
+.card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:16px;padding:20px;transition:.25s}
+.card:hover{border-color:var(--blue);box-shadow:0 0 24px var(--glow);transform:translateY(-2px)}
 .card h3{color:var(--cyan);margin-bottom:12px;font-size:1.1rem}
 .row{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:.95rem}
 .row:last-of-type{border-bottom:0}
 .row span:first-child{color:var(--muted)}
-.row span:last-child{font-family:ui-monospace,Menlo,monospace;word-break:break-all;text-align:right}
-button{margin-top:14px;width:100%;padding:11px;border:0;border-radius:10px;background:linear-gradient(135deg,#1f6fe0,#2f8bff);color:#fff;font-weight:700;font-size:1rem;cursor:pointer;transition:.2s}
-button:hover{filter:brightness(1.15)}
+.row span:last-child{font-family:ui-monospace,Menlo,monospace;word-break:break-all;text-align:end}
+button{font-family:inherit}
+.btn{display:block;margin-top:14px;width:100%;padding:11px;border:0;border-radius:10px;background:linear-gradient(135deg,#1f6fe0,#2f8bff);color:#fff;font-weight:700;font-size:1rem;cursor:pointer;transition:.2s;text-align:center}
+.btn:hover{filter:brightness(1.15)}
+.btn.discord{background:linear-gradient(135deg,#4752c4,#5865f2)}
+.dc{display:flex;align-items:center;gap:18px;flex-wrap:wrap;justify-content:space-between}
+.dc .txt{flex:1 1 260px}
+.dc h3{margin-bottom:6px}
+.dc p{color:var(--muted);line-height:1.5}
+.dc .btn{width:auto;min-width:190px;margin:0;padding:12px 22px}
 
 /* YETKİLİLER */
 .staff{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
 .member{text-align:center;padding:28px 20px}
-.avatar{width:84px;height:84px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font-size:2rem;font-weight:900;color:#fff;background:linear-gradient(135deg,#0f3d99,#2f8bff);box-shadow:0 0 20px rgba(47,139,255,.5)}
+.skin{width:96px;height:96px;margin:0 auto 14px;display:block;border-radius:14px;image-rendering:pixelated;border:2px solid var(--blue);box-shadow:0 0 20px rgba(47,139,255,.5);background:var(--chip)}
 .role{display:inline-block;padding:5px 14px;border-radius:999px;font-weight:800;font-size:.8rem;letter-spacing:.12em;margin-bottom:12px}
-.role.kurucu{background:rgba(255,196,60,.12);color:#ffcf5a;border:1px solid rgba(255,196,60,.5)}
-.role.admin{background:rgba(255,80,80,.12);color:#ff7a7a;border:1px solid rgba(255,80,80,.5)}
-.role.gelistirici{background:rgba(92,200,255,.12);color:var(--cyan);border:1px solid rgba(92,200,255,.5)}
+.role.kurucu{background:var(--goldbg);color:var(--gold);border:1px solid rgba(255,196,60,.55)}
+.role.admin{background:var(--redbg);color:var(--red);border:1px solid rgba(255,80,80,.55)}
+.role.gelistirici{background:var(--cyanbg);color:var(--rolecyan);border:1px solid rgba(92,200,255,.55)}
 .member .name{font-size:1.2rem;font-weight:800;word-break:break-all}
 
-footer{border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.85rem;padding:20px 16px}
-@media(max-width:520px){.brand span{font-size:.9rem}nav a{padding:8px 10px;font-size:.88rem}.brand img{width:38px;height:38px}}
+/* YAKINDA */
+.soon{text-align:center;padding:44px 20px;max-width:520px;margin:30px auto 0}
+.soon .big{font-size:2.6rem;margin-bottom:10px}
+.soon h3{font-size:1.3rem;margin-bottom:10px}
+.soon p{color:var(--muted);line-height:1.6}
 
-/* GİRİŞ / KAYIT */
+/* DUYURU PANELİ */
+.umenu,.bellwrap{position:relative}
+.overlay{position:fixed;inset:0;z-index:20}
+.dropdown{position:absolute;inset-inline-end:0;top:50px;z-index:30;min-width:240px;max-width:min(340px,90vw);background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 10px 40px var(--shadow)}
+.dropdown .dname{padding:8px 10px 10px;font-weight:800;border-bottom:1px solid var(--line);margin-bottom:8px;word-break:break-all}
+.dropdown .empty{padding:14px 10px;color:var(--muted);text-align:center}
+.upd{padding:10px;border-bottom:1px solid var(--line)}
+.upd:last-child{border-bottom:0}
+.upd small{color:var(--muted)}
+.upd b{display:block;margin:2px 0 4px}
+.upd p{color:var(--muted);font-size:.92rem;line-height:1.45;white-space:pre-wrap}
+.dropdown .btn{margin-top:4px;background:var(--chip);color:var(--text);border:1px solid var(--line);text-align:start;padding:10px 12px;font-size:.95rem}
+
+footer{border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.85rem;padding:20px 16px}
+footer a{color:var(--cyan);font-weight:700}
+
+/* GİRİŞ / KAYIT (şu an kapalı: AUTH_ENABLED=false) */
 .authwrap{display:grid;place-items:center;flex:1;width:100%;padding:24px 16px}
-.authcard{width:100%;max-width:400px;background:linear-gradient(180deg,var(--panel),#070c17);border:1px solid var(--line);border-radius:18px;padding:26px 22px;box-shadow:0 0 40px rgba(47,139,255,.18);text-align:center}
-.authcard .logo{width:96px;height:96px;border-radius:50%;object-fit:cover;box-shadow:0 0 28px rgba(47,139,255,.6);margin-bottom:12px}
-.authcard h1{font-size:1.7rem}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#060b16;border:1px solid var(--line);border-radius:12px;padding:5px;margin:20px 0 16px}
-.tabs button{margin:0;padding:10px;background:transparent;color:var(--muted);border-radius:8px}
-.tabs button.on{background:linear-gradient(135deg,#1f6fe0,#2f8bff);color:#fff;box-shadow:0 0 14px rgba(47,139,255,.4)}
+.authcard{width:100%;max-width:400px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:18px;padding:26px 22px;box-shadow:0 0 40px var(--glow);text-align:center}
+.authcard .logo{width:96px;height:96px;border-radius:50%;object-fit:cover;margin-bottom:12px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--input);border:1px solid var(--line);border-radius:12px;padding:5px;margin:20px 0 16px}
+.tabs button{padding:10px;background:transparent;color:var(--muted);border:0;border-radius:8px;font-weight:700;cursor:pointer}
+.tabs button.on{background:linear-gradient(135deg,#1f6fe0,#2f8bff);color:#fff}
 form{text-align:left}
 label{display:block;margin:12px 0 6px;color:var(--muted);font-size:.9rem;font-weight:600}
-input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:#060b16;color:var(--text);font-size:1rem;outline:none}
-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(47,139,255,.2)}
-.hint{color:var(--muted);font-size:.8rem;margin-top:6px;line-height:1.4}
-.msg{margin-top:14px;padding:10px 12px;border-radius:10px;background:rgba(255,80,80,.12);border:1px solid rgba(255,80,80,.5);color:#ff9a9a;font-size:.92rem}
-button:disabled{opacity:.6;cursor:wait}
-/* KULLANICI MENÜSÜ */
-.umenu{position:relative}
-.avatarbtn{margin:0;width:44px;height:44px;padding:0;border-radius:50%;overflow:hidden;border:2px solid var(--blue);background:#0f3d99;display:grid;place-items:center;box-shadow:0 0 14px rgba(47,139,255,.5)}
-.avatarbtn img{width:100%;height:100%;display:block;image-rendering:pixelated}
-.avatarbtn span{font-weight:900;font-size:1.1rem}
-.overlay{position:fixed;inset:0;z-index:20}
-.dropdown{position:absolute;right:0;top:54px;z-index:30;min-width:210px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:0 10px 40px rgba(0,0,0,.6)}
-.dropdown .dname{padding:8px 10px 10px;font-weight:800;border-bottom:1px solid var(--line);margin-bottom:8px;word-break:break-all}
-.dropdown button{margin:4px 0 0;background:#13203d;border:1px solid var(--line);text-align:left;padding:10px 12px;font-size:.95rem}
-.dropdown button:hover{border-color:var(--blue)}
+input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--input);color:var(--text);font-size:1rem;outline:none}
+.hint{color:var(--muted);font-size:.8rem;margin-top:6px}
+.msg{margin-top:14px;padding:10px 12px;border-radius:10px;background:var(--redbg);border:1px solid rgba(255,80,80,.5);color:var(--red);font-size:.92rem}
 .modal{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.7);display:grid;place-items:center;padding:16px}
-button.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
+.avatarbtn{overflow:hidden;padding:0;border:2px solid var(--blue)}
+.avatarbtn img{width:100%;height:100%;display:block;image-rendering:pixelated}
 
-nav a{cursor:pointer}
-[hidden]{display:none !important}
+@media(max-width:560px){
+  .brand span{display:none}
+  .nav{gap:8px}
+  .sel select{max-width:130px;font-size:.85rem}
+}
 </style>
 </head>
 <body>
 
-<!-- GİRİŞ / KAYIT -->
+<!-- GİRİŞ / KAYIT: şu an kapalı -->
 <main class="authwrap" id="auth" hidden>
   <div class="authcard">
     <img class="logo" src="/logo.jpg" alt="Yedili Network">
-    <h1>YEDİLİ NETWORK</h1>
+    <h1 style="font-size:1.7rem">YEDİLİ NETWORK</h1>
     <div class="tabs">
       <button type="button" id="tabLogin" class="on">Giriş Yap</button>
       <button type="button" id="tabReg">Kayıt Ol</button>
@@ -106,221 +142,370 @@ nav a{cursor:pointer}
     <form id="authForm">
       <label for="username">Kullanıcı adı</label>
       <input id="username" name="username" required maxlength="16" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
-      <div class="hint" id="hintUser" hidden>4-16 karakter; harf, rakam ve _ . Bedrock oyuncuları başa tek nokta (.) koyabilir.</div>
       <label for="password">Şifre</label>
       <input id="password" name="password" type="password" required autocomplete="current-password">
       <div id="regExtra" hidden>
         <label for="password2">Şifre tekrar</label>
         <input id="password2" name="password2" type="password" autocomplete="new-password">
-        <div class="hint">Şifre en az 8 karakter olmalı. Oyundaki /login şifren de bu olacak.</div>
       </div>
       <div class="msg" id="authMsg" hidden></div>
-      <button type="submit" id="authBtn">Giriş Yap</button>
+      <button class="btn" type="submit" id="authBtn">Giriş Yap</button>
     </form>
   </div>
 </main>
 
-<!-- SİTE -->
 <div id="app" hidden>
   <header>
     <div class="nav">
       <a class="brand" href="#/"><img src="/logo.jpg" alt="Yedili Network logo"><span>YEDİLİ <b>NETWORK</b></span></a>
-      <nav>
-        <a href="#/" id="navHome">Ana Sayfa</a>
-        <a href="#/yetkililer" id="navStaff">Yetkililer</a>
-      </nav>
-      <div class="umenu">
-        <button type="button" class="avatarbtn" id="avBtn" aria-label="Hesap menüsü"></button>
-        <div class="overlay" id="ov" hidden></div>
-        <div class="dropdown" id="dd" hidden>
-          <div class="dname" id="dName"></div>
-          <button type="button" id="openPw">Şifre Değiştir</button>
-          <button type="button" id="logoutBtn">Çıkış Yap</button>
+      <div class="tools">
+        <label class="sel has-ic"><span class="ic">📄</span>
+          <select id="pageSel">
+            <option value="#/" data-i18n="home"></option>
+            <option value="#/yetkililer" data-i18n="staff"></option>
+            <option value="#/destek" data-i18n="support"></option>
+            <option value="#/basvuru" data-i18n="apply"></option>
+          </select>
+        </label>
+        <label class="sel has-ic"><span class="ic">🌐</span><select id="langSel"></select></label>
+        <button type="button" class="iconbtn" id="themeBtn">🌙</button>
+        <div class="bellwrap">
+          <button type="button" class="iconbtn" id="bellBtn">🔔<span class="badge-dot" id="bellDot" hidden>0</span></button>
+          <div class="overlay" id="bellOv" hidden></div>
+          <div class="dropdown" id="bellDd" hidden>
+            <div class="dname" data-i18n="bell"></div>
+            <div id="updList"></div>
+          </div>
+        </div>
+        <div class="umenu" id="umenu" hidden>
+          <button type="button" class="iconbtn avatarbtn" id="avBtn"></button>
+          <div class="overlay" id="ov" hidden></div>
+          <div class="dropdown" id="dd" hidden>
+            <div class="dname" id="dName"></div>
+            <button type="button" class="btn" id="logoutBtn">Çıkış Yap</button>
+          </div>
         </div>
       </div>
     </div>
   </header>
 
-  <main id="pageHome">
+  <!-- ANA SAYFA -->
+  <main id="page-home">
     <section class="hero">
       <img class="logo" src="/logo.jpg" alt="Yedili Network">
       <h1>YEDİLİ<span class="net">NETWORK</span></h1>
-      <p class="lead">Hoş geldin, <b id="welcome"></b>! Java ve Bedrock oyuncuları birlikte aynı sunucuda oynayabilir.</p>
-      <span class="badge">Sürüm: 1.21.5x</span>
+      <p class="lead" data-i18n="lead"></p>
+      <span class="badge"><span data-i18n="version"></span>: 1.21.5x</span>
     </section>
-    <h2 class="title">Nasıl Bağlanılır?</h2>
+
+    <h2 class="title" data-i18n="howTo"></h2>
     <section class="cards">
       <div class="card">
         <h3>Java Edition</h3>
-        <div class="row"><span>Adres</span><span>yedilinw.mangoohost.live</span></div>
-        <button type="button" class="copy">Adresi Kopyala</button>
+        <div class="row"><span data-i18n="address"></span><span>yedilinw.mangoohost.live</span></div>
+        <button type="button" class="btn copy" data-i18n="copy"></button>
       </div>
       <div class="card">
         <h3>Bedrock Edition</h3>
-        <div class="row"><span>Adres</span><span>yedilinw.mangoohost.live</span></div>
-        <div class="row"><span>Port</span><span>22992</span></div>
-        <button type="button" class="copy">Adresi Kopyala</button>
+        <div class="row"><span data-i18n="address"></span><span>yedilinw.mangoohost.live</span></div>
+        <div class="row"><span data-i18n="port"></span><span>22992</span></div>
+        <button type="button" class="btn copy" data-i18n="copy"></button>
+      </div>
+    </section>
+
+    <section class="card dc" style="margin-top:22px">
+      <div class="txt">
+        <h3>💬 <span data-i18n="dcTitle"></span></h3>
+        <p data-i18n="dcText"></p>
+      </div>
+      <a class="btn discord" href="https://discord.gg/yrwER5uSF" target="_blank" rel="noopener noreferrer" data-i18n="dcBtn"></a>
+    </section>
+  </main>
+
+  <!-- YETKİLİLER -->
+  <main id="page-staff" hidden>
+    <h2 class="title" style="margin-top:8px" data-i18n="staffTitle"></h2>
+    <section class="staff">
+      <div class="card member">
+        <img class="skin" data-skin="MHF_Steve" alt="geckocraft88117">
+        <span class="role kurucu" data-i18n="roleFounder"></span>
+        <div class="name">geckocraft88117</div>
+      </div>
+      <div class="card member">
+        <img class="skin" data-skin="MHF_Alex" alt="Eren_6331">
+        <span class="role admin" data-i18n="roleAdmin"></span>
+        <div class="name">Eren_6331</div>
+      </div>
+      <div class="card member">
+        <img class="skin" data-skin="MHF_Enderman" alt=".alemdeVENOM">
+        <span class="role gelistirici" data-i18n="roleDev"></span>
+        <div class="name">.alemdeVENOM</div>
       </div>
     </section>
   </main>
 
-  <main id="pageStaff" hidden>
-    <h2 class="title" style="margin-top:8px">Yetkililer</h2>
-    <section class="staff">
-      <div class="card member"><div class="avatar">G</div><span class="role kurucu">KURUCU</span><div class="name">geckocraft88117</div></div>
-      <div class="card member"><div class="avatar">E</div><span class="role admin">ADMİN</span><div class="name">Eren_6331</div></div>
-      <div class="card member"><div class="avatar">A</div><span class="role gelistirici">GELİŞTİRİCİ</span><div class="name">.alemdeVENOM</div></div>
+  <!-- DESTEK TALEBİ (hazırlanıyor) -->
+  <main id="page-support" hidden>
+    <h2 class="title" style="margin-top:8px" data-i18n="support"></h2>
+    <section class="card soon">
+      <div class="big">🎫</div>
+      <h3 data-i18n="soon"></h3>
+      <p data-i18n="soonSupport"></p>
     </section>
   </main>
 
-  <footer>© Yedili Network</footer>
+  <!-- YETKİLİ BAŞVURU (hazırlanıyor) -->
+  <main id="page-apply" hidden>
+    <h2 class="title" style="margin-top:8px" data-i18n="apply"></h2>
+    <section class="card soon">
+      <div class="big">📝</div>
+      <h3 data-i18n="soon"></h3>
+      <p data-i18n="soonApply"></p>
+    </section>
+  </main>
 
-  <!-- ŞİFRE DEĞİŞTİR -->
-  <div class="modal" id="pwModal" hidden>
-    <div class="authcard">
-      <h1 style="font-size:1.3rem">Şifre Değiştir</h1>
-      <p class="lead" id="pwDone" style="margin-top:16px" hidden>Şifren değiştirildi. Oyunda yeni şifrenle giriş yapabilirsin.</p>
-      <form id="pwForm">
-        <label for="cur">Mevcut şifre</label>
-        <input id="cur" name="current" type="password" required autocomplete="current-password">
-        <label for="n1">Yeni şifre</label>
-        <input id="n1" name="password" type="password" required minlength="8" autocomplete="new-password">
-        <label for="n2">Yeni şifre tekrar</label>
-        <input id="n2" name="password2" type="password" required minlength="8" autocomplete="new-password">
-        <div class="hint">Yeni şifre en az 8 karakter olmalı.</div>
-        <div class="msg" id="pwMsg" hidden></div>
-        <button type="submit" id="pwBtn">Şifreyi Güncelle</button>
-      </form>
-      <button type="button" class="ghost" id="pwClose">Vazgeç</button>
-    </div>
-  </div>
+  <footer>© Yedili Network · <a href="https://discord.gg/yrwER5uSF" target="_blank" rel="noopener noreferrer">Discord</a></footer>
 </div>
 
 <script>
-var $ = function (s) { return document.querySelector(s); };
-var me = null;
-var mode = "login";
-var GENERIC = "Bir hata oluştu, tekrar dene";
+/* ============ AYARLAR ============ */
+var AUTH_ENABLED = false;   // Giriş/kayıt sistemi: şu an KAPALI. Açmak için true yap.
+var UPDATES = [];           // Duyurular: { date:"25.11.2026", title:"Başlık", text:"Metin" }
 
+var LANGS = [
+  ["tr","Türkçe"],["en-GB","English (British)"],["en-US","English (American)"],["fr","Français"],["de","Deutsch"],
+  ["az","Azərbaycanca"],["ru","Русский"],["ro","Română"],["hi","हिन्दी"],["ar","العربية"]
+];
+
+var T = {
+ "tr":{home:"Ana Sayfa",staff:"Yetkililer",support:"Destek Talebi",apply:"Yetkili Başvuru",
+  lead:"Java ve Bedrock oyuncuları birlikte aynı sunucuda oynayabilir. Aşağıdaki bilgilerle hemen bağlan.",version:"Sürüm",howTo:"Nasıl Bağlanılır?",
+  address:"Adres",port:"Port",copy:"Adresi Kopyala",copied:"Kopyalandı!",
+  dcTitle:"Discord Topluluğumuz",dcText:"Discord sunucumuza katıl, duyuruları kaçırma ve diğer oyuncularla tanış.",dcBtn:"Discord'a Katıl",
+  staffTitle:"Yetkililer",roleFounder:"KURUCU",roleAdmin:"ADMİN",roleDev:"GELİŞTİRİCİ",
+  soon:"Çok Yakında",soonSupport:"Destek talebi sistemi hazırlanıyor. Çok yakında buradan talep açabileceksin.",soonApply:"Yetkili başvuruları (Rehber, Moderatör, Asistan) çok yakında burada açılacak.",
+  bell:"Duyurular",noUpdates:"Henüz duyuru yok.",themeDark:"Koyu tema",themeLight:"Açık tema",langLabel:"Dil"},
+ "en-GB":{home:"Home",staff:"Staff",support:"Support Ticket",apply:"Staff Application",
+  lead:"Java and Bedrock players can play together on the same server. Connect with the details below.",version:"Version",howTo:"How to Connect",
+  address:"Address",port:"Port",copy:"Copy Address",copied:"Copied!",
+  dcTitle:"Our Discord Community",dcText:"Join our Discord server, never miss an announcement and meet other players.",dcBtn:"Join Discord",
+  staffTitle:"Staff",roleFounder:"FOUNDER",roleAdmin:"ADMIN",roleDev:"DEVELOPER",
+  soon:"Coming Soon",soonSupport:"The support ticket system is being prepared. You will soon be able to open a ticket here.",soonApply:"Staff applications (Guide, Moderator, Assistant) will open here soon.",
+  bell:"Announcements",noUpdates:"No announcements yet.",themeDark:"Dark theme",themeLight:"Light theme",langLabel:"Language"},
+ "en-US":{home:"Home",staff:"Staff",support:"Support Ticket",apply:"Staff Application",
+  lead:"Java and Bedrock players can play together on the same server. Connect using the info below.",version:"Version",howTo:"How to Connect",
+  address:"Address",port:"Port",copy:"Copy Address",copied:"Copied!",
+  dcTitle:"Our Discord Community",dcText:"Join our Discord server, don't miss any announcements and meet other players.",dcBtn:"Join Discord",
+  staffTitle:"Staff",roleFounder:"FOUNDER",roleAdmin:"ADMIN",roleDev:"DEVELOPER",
+  soon:"Coming Soon",soonSupport:"The support ticket system is being set up. You'll soon be able to open a ticket here.",soonApply:"Staff applications (Guide, Moderator, Assistant) will open here soon.",
+  bell:"Announcements",noUpdates:"No announcements yet.",themeDark:"Dark theme",themeLight:"Light theme",langLabel:"Language"},
+ "fr":{home:"Accueil",staff:"Équipe",support:"Ticket de support",apply:"Candidature staff",
+  lead:"Les joueurs Java et Bedrock peuvent jouer ensemble sur le même serveur. Connecte-toi avec les informations ci-dessous.",version:"Version",howTo:"Comment se connecter ?",
+  address:"Adresse",port:"Port",copy:"Copier l'adresse",copied:"Copié !",
+  dcTitle:"Notre communauté Discord",dcText:"Rejoins notre serveur Discord, ne rate aucune annonce et rencontre d'autres joueurs.",dcBtn:"Rejoindre Discord",
+  staffTitle:"Équipe",roleFounder:"FONDATEUR",roleAdmin:"ADMIN",roleDev:"DÉVELOPPEUR",
+  soon:"Bientôt disponible",soonSupport:"Le système de tickets est en préparation. Tu pourras bientôt ouvrir un ticket ici.",soonApply:"Les candidatures staff (Guide, Modérateur, Assistant) ouvriront bientôt ici.",
+  bell:"Annonces",noUpdates:"Aucune annonce pour le moment.",themeDark:"Thème sombre",themeLight:"Thème clair",langLabel:"Langue"},
+ "de":{home:"Startseite",staff:"Team",support:"Support-Ticket",apply:"Team-Bewerbung",
+  lead:"Java- und Bedrock-Spieler können gemeinsam auf demselben Server spielen. Verbinde dich mit den Angaben unten.",version:"Version",howTo:"So verbindest du dich",
+  address:"Adresse",port:"Port",copy:"Adresse kopieren",copied:"Kopiert!",
+  dcTitle:"Unsere Discord-Community",dcText:"Tritt unserem Discord-Server bei, verpasse keine Ankündigung und lerne andere Spieler kennen.",dcBtn:"Discord beitreten",
+  staffTitle:"Team",roleFounder:"GRÜNDER",roleAdmin:"ADMIN",roleDev:"ENTWICKLER",
+  soon:"Demnächst",soonSupport:"Das Ticketsystem wird vorbereitet. Bald kannst du hier ein Ticket erstellen.",soonApply:"Team-Bewerbungen (Guide, Moderator, Assistent) öffnen bald hier.",
+  bell:"Ankündigungen",noUpdates:"Noch keine Ankündigungen.",themeDark:"Dunkles Design",themeLight:"Helles Design",langLabel:"Sprache"},
+ "az":{home:"Ana səhifə",staff:"Yetkililər",support:"Dəstək sorğusu",apply:"Yetkili müraciəti",
+  lead:"Java və Bedrock oyunçuları eyni serverdə birlikdə oynaya bilər. Aşağıdakı məlumatlarla qoşul.",version:"Versiya",howTo:"Necə qoşulmaq olar?",
+  address:"Ünvan",port:"Port",copy:"Ünvanı kopyala",copied:"Kopyalandı!",
+  dcTitle:"Discord icmamız",dcText:"Discord serverimizə qoşul, elanları qaçırma və digər oyunçularla tanış ol.",dcBtn:"Discord-a qoşul",
+  staffTitle:"Yetkililər",roleFounder:"QURUCU",roleAdmin:"ADMİN",roleDev:"PROQRAMÇI",
+  soon:"Tezliklə",soonSupport:"Dəstək sorğusu sistemi hazırlanır. Tezliklə buradan sorğu aça biləcəksən.",soonApply:"Yetkili müraciətləri (Bələdçi, Moderator, Assistent) tezliklə burada açılacaq.",
+  bell:"Elanlar",noUpdates:"Hələ elan yoxdur.",themeDark:"Tünd tema",themeLight:"Açıq tema",langLabel:"Dil"},
+ "ru":{home:"Главная",staff:"Команда",support:"Обращение в поддержку",apply:"Заявка в персонал",
+  lead:"Игроки Java и Bedrock могут играть вместе на одном сервере. Подключайся по данным ниже.",version:"Версия",howTo:"Как подключиться?",
+  address:"Адрес",port:"Порт",copy:"Скопировать адрес",copied:"Скопировано!",
+  dcTitle:"Наше сообщество в Discord",dcText:"Присоединяйся к нашему Discord-серверу, не пропускай объявления и знакомься с игроками.",dcBtn:"Войти в Discord",
+  staffTitle:"Команда",roleFounder:"ОСНОВАТЕЛЬ",roleAdmin:"АДМИН",roleDev:"РАЗРАБОТЧИК",
+  soon:"Скоро",soonSupport:"Система обращений готовится. Скоро здесь можно будет создать обращение.",soonApply:"Заявки в персонал (Гид, Модератор, Ассистент) скоро откроются здесь.",
+  bell:"Объявления",noUpdates:"Пока нет объявлений.",themeDark:"Тёмная тема",themeLight:"Светлая тема",langLabel:"Язык"},
+ "ro":{home:"Acasă",staff:"Echipa",support:"Tichet de suport",apply:"Aplicație staff",
+  lead:"Jucătorii Java și Bedrock pot juca împreună pe același server. Conectează-te cu datele de mai jos.",version:"Versiune",howTo:"Cum te conectezi?",
+  address:"Adresă",port:"Port",copy:"Copiază adresa",copied:"Copiat!",
+  dcTitle:"Comunitatea noastră Discord",dcText:"Intră pe serverul nostru de Discord, nu rata anunțurile și cunoaște alți jucători.",dcBtn:"Intră pe Discord",
+  staffTitle:"Echipa",roleFounder:"FONDATOR",roleAdmin:"ADMIN",roleDev:"DEZVOLTATOR",
+  soon:"În curând",soonSupport:"Sistemul de tichete este în pregătire. În curând vei putea deschide un tichet aici.",soonApply:"Aplicațiile pentru staff (Ghid, Moderator, Asistent) se vor deschide curând aici.",
+  bell:"Anunțuri",noUpdates:"Niciun anunț deocamdată.",themeDark:"Temă întunecată",themeLight:"Temă luminoasă",langLabel:"Limbă"},
+ "hi":{home:"होम",staff:"स्टाफ",support:"सपोर्ट टिकट",apply:"स्टाफ आवेदन",
+  lead:"Java और Bedrock खिलाड़ी एक ही सर्वर पर साथ खेल सकते हैं। नीचे दी गई जानकारी से जुड़ें।",version:"संस्करण",howTo:"कैसे जुड़ें?",
+  address:"पता",port:"पोर्ट",copy:"पता कॉपी करें",copied:"कॉपी हो गया!",
+  dcTitle:"हमारी Discord कम्युनिटी",dcText:"हमारे Discord सर्वर से जुड़ें, कोई घोषणा न चूकें और दूसरे खिलाड़ियों से मिलें।",dcBtn:"Discord से जुड़ें",
+  staffTitle:"स्टाफ",roleFounder:"संस्थापक",roleAdmin:"एडमिन",roleDev:"डेवलपर",
+  soon:"जल्द आ रहा है",soonSupport:"सपोर्ट टिकट सिस्टम तैयार हो रहा है। जल्द ही आप यहाँ टिकट खोल सकेंगे।",soonApply:"स्टाफ आवेदन (गाइड, मॉडरेटर, असिस्टेंट) जल्द ही यहाँ खुलेंगे।",
+  bell:"घोषणाएँ",noUpdates:"अभी कोई घोषणा नहीं है।",themeDark:"डार्क थीम",themeLight:"लाइट थीम",langLabel:"भाषा"},
+ "ar":{home:"الرئيسية",staff:"الطاقم",support:"تذكرة دعم",apply:"التقديم على الإدارة",
+  lead:"يمكن للاعبي Java وBedrock اللعب معًا على نفس الخادم. اتصل باستخدام المعلومات أدناه.",version:"الإصدار",howTo:"كيف تتصل؟",
+  address:"العنوان",port:"المنفذ",copy:"نسخ العنوان",copied:"تم النسخ!",
+  dcTitle:"مجتمعنا على Discord",dcText:"انضم إلى خادم Discord الخاص بنا ولا تفوّت أي إعلان وتعرّف على اللاعبين.",dcBtn:"انضم إلى Discord",
+  staffTitle:"الطاقم",roleFounder:"المؤسس",roleAdmin:"الأدمن",roleDev:"المطوّر",
+  soon:"قريبًا",soonSupport:"نظام التذاكر قيد التحضير. قريبًا ستتمكن من فتح تذكرة من هنا.",soonApply:"سيُفتح التقديم على الإدارة (مرشد، مشرف، مساعد) قريبًا هنا.",
+  bell:"الإعلانات",noUpdates:"لا توجد إعلانات بعد.",themeDark:"الوضع الداكن",themeLight:"الوضع الفاتح",langLabel:"اللغة"}
+};
+
+/* ============ YARDIMCILAR ============ */
+var $ = function (s) { return document.querySelector(s); };
+function store(k, v) {
+  try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; }
+}
+function show(el, on) { el.hidden = !on; }
+var lang = "tr";
+function t(k) { return (T[lang] && T[lang][k]) || T.tr[k] || k; }
+
+/* ============ DİL ============ */
+function applyLang() {
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-i18n]").forEach(function (el) { el.textContent = t(el.getAttribute("data-i18n")); });
+  $("#langSel").setAttribute("aria-label", t("langLabel"));
+  $("#pageSel").setAttribute("aria-label", t("home"));
+  $("#bellBtn").setAttribute("aria-label", t("bell"));
+  applyTheme(document.documentElement.getAttribute("data-theme"));
+  renderUpdates();
+}
+(function buildLangs() {
+  var s = $("#langSel");
+  LANGS.forEach(function (l) { var o = document.createElement("option"); o.value = l[0]; o.textContent = l[1]; s.appendChild(o); });
+  var saved = store("yn_lang");
+  lang = T[saved] ? saved : "tr";   // varsayılan dil: Türkçe
+  s.value = lang;
+  s.onchange = function () { lang = s.value; store("yn_lang", lang); applyLang(); };
+})();
+
+/* ============ TEMA ============ */
+function applyTheme(th) {
+  document.documentElement.setAttribute("data-theme", th);
+  var b = $("#themeBtn");
+  b.textContent = th === "dark" ? "🌙" : "☀️";
+  b.title = th === "dark" ? t("themeLight") : t("themeDark");
+  b.setAttribute("aria-label", b.title);
+}
+(function initTheme() {
+  var saved = store("yn_theme");
+  var th = saved === "light" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", th);
+  $("#themeBtn").onclick = function () {
+    var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    store("yn_theme", next);
+    applyTheme(next);
+  };
+})();
+
+/* ============ SAYFALAR ============ */
+var PAGES = { "#/": "page-home", "#/yetkililer": "page-staff", "#/destek": "page-support", "#/basvuru": "page-apply" };
+function route() {
+  var h = PAGES[location.hash] ? location.hash : "#/";
+  Object.keys(PAGES).forEach(function (k) { show($("#" + PAGES[k]), k === h); });
+  $("#pageSel").value = h;
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+$("#pageSel").onchange = function () { location.hash = $("#pageSel").value; };
+
+/* ============ YETKİLİ KAFALARI (Minecraft skin) ============ */
+var FALLBACK = "data:image/svg+xml;utf8," + encodeURIComponent(
+  "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'>" +
+  "<rect width='8' height='8' fill='#c58c63'/><rect width='8' height='2' fill='#4a2f1a'/><rect y='2' width='1' height='1' fill='#4a2f1a'/><rect x='7' y='2' width='1' height='1' fill='#4a2f1a'/>" +
+  "<rect x='1' y='4' width='2' height='1' fill='#fff'/><rect x='5' y='4' width='2' height='1' fill='#fff'/><rect x='2' y='4' width='1' height='1' fill='#3a5fcd'/><rect x='5' y='4' width='1' height='1' fill='#3a5fcd'/>" +
+  "<rect x='3' y='5' width='2' height='1' fill='#a8683f'/><rect x='2' y='6' width='4' height='1' fill='#6b3a22'/></svg>");
+document.querySelectorAll("img.skin").forEach(function (img) {
+  img.src = "https://mc-heads.net/avatar/" + encodeURIComponent(img.getAttribute("data-skin")) + "/128";
+  img.onerror = function () { img.onerror = null; img.src = FALLBACK; };
+});
+
+/* ============ DUYURULAR ============ */
+function renderUpdates() {
+  var list = $("#updList");
+  list.textContent = "";
+  if (!UPDATES.length) {
+    var e = document.createElement("div"); e.className = "empty"; e.textContent = t("noUpdates"); list.appendChild(e);
+  } else {
+    UPDATES.forEach(function (u) {
+      var d = document.createElement("div"); d.className = "upd";
+      var s = document.createElement("small"); s.textContent = u.date || "";
+      var b = document.createElement("b"); b.textContent = u.title || "";
+      var p = document.createElement("p"); p.textContent = u.text || "";
+      d.appendChild(s); d.appendChild(b); d.appendChild(p); list.appendChild(d);
+    });
+  }
+  var seen = parseInt(store("yn_seen") || "0", 10) || 0;
+  var unseen = Math.max(0, UPDATES.length - seen);
+  $("#bellDot").textContent = unseen;
+  show($("#bellDot"), unseen > 0);
+}
+function bell(on) { show($("#bellDd"), on); show($("#bellOv"), on); if (on) { store("yn_seen", String(UPDATES.length)); renderUpdates(); } }
+$("#bellBtn").onclick = function () { bell($("#bellDd").hidden); };
+$("#bellOv").onclick = function () { bell(false); };
+
+/* ============ KOPYALA ============ */
+document.querySelectorAll(".copy").forEach(function (b) {
+  b.onclick = function () {
+    var text = "yedilinw.mangoohost.live";
+    function ok() { b.textContent = t("copied"); setTimeout(function () { b.textContent = t("copy"); }, 1500); }
+    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(ok, ok); }
+    else { var x = document.createElement("textarea"); x.value = text; document.body.appendChild(x); x.select(); document.execCommand("copy"); x.remove(); ok(); }
+  };
+});
+
+/* ============ GİRİŞ / KAYIT (AUTH_ENABLED=true olunca çalışır) ============ */
+var me = null, mode = "login", GENERIC = "Bir hata oluştu, tekrar dene";
 function api(body) {
   return fetch("/api/auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
     .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok, d: d }; }); })
     .catch(function () { return { ok: false, d: { error: GENERIC } }; });
 }
-function show(el, on) { el.hidden = !on; }
 function msg(el, text) { el.textContent = text || ""; show(el, !!text); }
-
-/* ---- Giriş / Kayıt ---- */
 function setMode(m) {
   mode = m;
   $("#tabLogin").className = m === "login" ? "on" : "";
   $("#tabReg").className = m === "register" ? "on" : "";
   show($("#regExtra"), m === "register");
-  show($("#hintUser"), m === "register");
   $("#password2").required = m === "register";
-  $("#password").minLength = m === "register" ? 8 : 0;
-  $("#password").autocomplete = m === "register" ? "new-password" : "current-password";
   $("#authBtn").textContent = m === "login" ? "Giriş Yap" : "Kayıt Ol";
   msg($("#authMsg"), "");
 }
-$("#tabLogin").onclick = function () { setMode("login"); };
-$("#tabReg").onclick = function () { setMode("register"); };
-
-$("#authForm").onsubmit = function (e) {
-  e.preventDefault();
-  msg($("#authMsg"), "");
-  var btn = $("#authBtn"); btn.disabled = true;
-  api({ action: mode, username: $("#username").value, password: $("#password").value, password2: $("#password2").value })
-    .then(function (r) {
-      if (r.ok) { location.hash = "#/"; init(); return; }
-      msg($("#authMsg"), r.d.error || GENERIC);
-      btn.disabled = false;
-    });
-};
-
-/* ---- Site ---- */
-function route() {
-  var staff = location.hash === "#/yetkililer";
-  show($("#pageHome"), !staff);
-  show($("#pageStaff"), staff);
-  $("#navHome").className = staff ? "" : "active";
-  $("#navStaff").className = staff ? "active" : "";
+function renderAuth() {
+  show($("#auth"), AUTH_ENABLED && !me);
+  show($("#app"), !AUTH_ENABLED || !!me);
+  show($("#umenu"), AUTH_ENABLED && !!me);
+  if (AUTH_ENABLED && me) {
+    $("#dName").textContent = me.realname;
+    var b = $("#avBtn"); b.textContent = "";
+    var im = document.createElement("img");
+    im.src = "https://mc-heads.net/avatar/" + encodeURIComponent(me.realname) + "/64"; im.alt = me.realname;
+    im.onerror = function () { im.onerror = null; im.src = FALLBACK; };
+    b.appendChild(im);
+  }
 }
-window.addEventListener("hashchange", route);
-
-function setAvatar(name) {
-  var b = $("#avBtn");
-  b.textContent = "";
-  var img = document.createElement("img");
-  img.alt = name; img.width = 40; img.height = 40;
-  img.src = "https://mc-heads.net/avatar/" + encodeURIComponent(name) + "/64";
-  img.onerror = function () {
-    b.textContent = "";
-    var s = document.createElement("span");
-    s.textContent = name.replace(/^\./, "").charAt(0).toUpperCase();
-    b.appendChild(s);
+if (AUTH_ENABLED) {
+  $("#tabLogin").onclick = function () { setMode("login"); };
+  $("#tabReg").onclick = function () { setMode("register"); };
+  $("#authForm").onsubmit = function (e) {
+    e.preventDefault(); msg($("#authMsg"), "");
+    api({ action: mode, username: $("#username").value, password: $("#password").value, password2: $("#password2").value })
+      .then(function (r) { if (r.ok) { initAuth(); } else { msg($("#authMsg"), r.d.error || GENERIC); } });
   };
-  b.appendChild(img);
+  $("#avBtn").onclick = function () { show($("#dd"), $("#dd").hidden); show($("#ov"), !$("#dd").hidden); };
+  $("#ov").onclick = function () { show($("#dd"), false); show($("#ov"), false); };
+  $("#logoutBtn").onclick = function () { api({ action: "logout" }).then(function () { me = null; show($("#dd"), false); show($("#ov"), false); renderAuth(); }); };
+}
+function initAuth() {
+  if (!AUTH_ENABLED) { me = null; renderAuth(); return; }
+  api({ action: "me" }).then(function (r) { me = r.d && r.d.user ? r.d.user : null; renderAuth(); });
 }
 
-function render() {
-  show($("#auth"), !me);
-  show($("#app"), !!me);
-  if (!me) return;
-  $("#welcome").textContent = me.realname;
-  $("#dName").textContent = me.realname;
-  setAvatar(me.realname);
-  route();
-}
-
-function init() {
-  api({ action: "me" }).then(function (r) {
-    me = r.d && r.d.user ? r.d.user : null;
-    btnReset();
-    render();
-  });
-}
-function btnReset() { $("#authBtn").disabled = false; $("#authForm").reset(); setMode("login"); }
-
-/* ---- Menü ---- */
-function menu(on) { show($("#dd"), on); show($("#ov"), on); }
-$("#avBtn").onclick = function () { menu($("#dd").hidden); };
-$("#ov").onclick = function () { menu(false); };
-$("#logoutBtn").onclick = function () {
-  api({ action: "logout" }).then(function () { me = null; menu(false); location.hash = "#/"; render(); });
-};
-
-/* ---- Şifre değiştir ---- */
-function pwModal(on) {
-  show($("#pwModal"), on);
-  if (on) { $("#pwForm").reset(); show($("#pwForm"), true); show($("#pwDone"), false); msg($("#pwMsg"), ""); $("#pwClose").textContent = "Vazgeç"; }
-}
-$("#openPw").onclick = function () { menu(false); pwModal(true); };
-$("#pwClose").onclick = function () { pwModal(false); };
-$("#pwForm").onsubmit = function (e) {
-  e.preventDefault();
-  msg($("#pwMsg"), "");
-  var btn = $("#pwBtn"); btn.disabled = true;
-  api({ action: "changepw", current: $("#cur").value, password: $("#n1").value, password2: $("#n2").value })
-    .then(function (r) {
-      btn.disabled = false;
-      if (r.ok) { show($("#pwForm"), false); show($("#pwDone"), true); $("#pwClose").textContent = "Tamam"; return; }
-      msg($("#pwMsg"), r.d.error || GENERIC);
-    });
-};
-
-/* ---- Kopyala ---- */
-document.querySelectorAll(".copy").forEach(function (b) {
-  b.onclick = function () {
-    var old = b.textContent, text = "yedilinw.mangoohost.live";
-    function ok() { b.textContent = "Kopyalandı!"; setTimeout(function () { b.textContent = old; }, 1500); }
-    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(ok, ok); }
-    else { var t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); ok(); }
-  };
-});
-
+/* ============ BAŞLAT ============ */
 setMode("login");
-init();
+applyLang();
+route();
+initAuth();
 </script>
 </body>
 </html>
