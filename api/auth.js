@@ -1,4 +1,5 @@
 const crypto = require("node:crypto");
+const { STAFF } = require("../lib/common");
 const { neon } = require("@neondatabase/serverless");
 const { SignJWT, jwtVerify } = require("jose");
 
@@ -161,18 +162,18 @@ function tooMany(ip) {
 }
 
 const send = (res, status, obj) => res.status(status).json(obj);
-const fail = (res, status, msg) => send(res, status, { ok: false, error: msg });
+const fail = (res, status, msg, code) => send(res, status, { ok: false, code: code || "generic", error: msg });
 
 module.exports = async (req, res) => {
   res.setHeader("Cache-Control", "no-store");
   try {
-    if (req.method !== "POST") return fail(res, 405, "Geçersiz istek");
+    if (req.method !== "POST") return fail(res, 405, "Geçersiz istek", "bad_input");
     const body = req.body && typeof req.body === "object" ? req.body : {};
     const action = body.action;
 
     if (action === "me") {
       const s = await readSession(req);
-      return send(res, 200, { ok: true, user: s ? { realname: s.realname } : null });
+      return send(res, 200, { ok: true, user: s ? { realname: s.realname, staff: STAFF.includes(String(s.username).toLowerCase()) } : null });
     }
     if (action === "logout") {
       clearSession(res);
@@ -182,46 +183,46 @@ module.exports = async (req, res) => {
     const ip =
       String(req.headers["x-forwarded-for"] || "").split(",")[0].trim() ||
       req.headers["x-real-ip"] || "0.0.0.0";
-    if (tooMany(ip)) return fail(res, 429, "Çok fazla deneme yaptın, biraz bekle");
+    if (tooMany(ip)) return fail(res, 429, "Çok fazla deneme yaptın, biraz bekle", "rate");
 
     const username = String(body.username || "").trim();
     const password = String(body.password || "");
-    if (password.length > 128) return fail(res, 400, "Şifre çok uzun");
+    if (password.length > 128) return fail(res, 400, "Şifre çok uzun", "bad_input");
 
     if (action === "changepw") {
       const s = await readSession(req);
-      if (!s) return fail(res, 401, "Önce giriş yapmalısın");
-      if (password.length < 8) return fail(res, 400, "Yeni şifre en az 8 karakter olmalı");
-      if (password !== String(body.password2 || "")) return fail(res, 400, "Şifreler eşleşmiyor");
+      if (!s) return fail(res, 401, "Önce giriş yapmalısın", "auth");
+      if (password.length < 8) return fail(res, 400, "Yeni şifre en az 8 karakter olmalı", "short_pw");
+      if (password !== String(body.password2 || "")) return fail(res, 400, "Şifreler eşleşmiyor", "mismatch");
       const cur = String(body.current || "");
       const u = cur.length <= 128 ? await loginUser(s.username, cur) : null;
-      if (!u) return fail(res, 401, "Mevcut şifre hatalı");
+      if (!u) return fail(res, 401, "Mevcut şifre hatalı", "bad_current");
       await changePassword(s.username, password);
       return send(res, 200, { ok: true });
     }
 
     if (action === "login") {
-      if (!USERNAME_RE.test(username) || !password) return fail(res, 401, "Kullanıcı adı veya şifre hatalı");
+      if (!USERNAME_RE.test(username) || !password) return fail(res, 401, "Kullanıcı adı veya şifre hatalı", "bad_creds");
       const u = await loginUser(username, password);
-      if (!u) return fail(res, 401, "Kullanıcı adı veya şifre hatalı");
+      if (!u) return fail(res, 401, "Kullanıcı adı veya şifre hatalı", "bad_creds");
       await setSession(res, u);
       return send(res, 200, { ok: true });
     }
 
     if (action === "register") {
       if (!USERNAME_RE.test(username))
-        return fail(res, 400, "Kullanıcı adı 4-16 karakter olmalı; harf, rakam ve _ kullanılabilir (Bedrock için başta tek nokta)");
-      if (password.length < 8) return fail(res, 400, "Şifre en az 8 karakter olmalı");
-      if (password !== String(body.password2 || "")) return fail(res, 400, "Şifreler eşleşmiyor");
+        return fail(res, 400, "Kullanıcı adı 4-16 karakter olmalı; harf, rakam ve _ kullanılabilir (Bedrock için başta tek nokta)", "bad_user");
+      if (password.length < 8) return fail(res, 400, "Şifre en az 8 karakter olmalı", "short_pw");
+      if (password !== String(body.password2 || "")) return fail(res, 400, "Şifreler eşleşmiyor", "mismatch");
       const r = await registerUser(username, password, ip);
-      if (!r.ok) return fail(res, 409, "Bu kullanıcı adı alınmış");
+      if (!r.ok) return fail(res, 409, "Bu kullanıcı adı alınmış", "taken");
       await setSession(res, r.user);
       return send(res, 200, { ok: true });
     }
 
-    return fail(res, 400, "Geçersiz istek");
+    return fail(res, 400, "Geçersiz istek", "bad_input");
   } catch (e) {
     console.error("[auth]", e && e.message ? e.message : "bilinmeyen hata");
-    return fail(res, 500, "Bir hata oluştu, tekrar dene");
+    return fail(res, 500, "Bir hata oluştu, tekrar dene", "generic");
   }
 };

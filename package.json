@@ -1,9 +1,10 @@
 {
   "name": "yedili-network",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "dependencies": {
     "@neondatabase/serverless": "^1.0.0",
+    "@vercel/blob": "latest",
     "jose": "^5.9.6"
   }
 }

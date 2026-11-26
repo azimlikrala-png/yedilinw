@@ -126,35 +126,62 @@ input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--lin
   .nav{gap:8px}
   .sel select{max-width:130px;font-size:.85rem}
 }
+/* ---- Faz 2 ek stiller ---- */
+textarea,.fsel{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--input);color:var(--text);font-size:1rem;outline:none;font-family:inherit}
+textarea{min-height:110px;resize:vertical;line-height:1.5}
+input:focus,textarea:focus,.fsel:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(47,139,255,.2)}
+form{text-align:start}
+.authcard{text-align:center}
+.btn.sm{display:inline-block;width:auto;margin:0;padding:9px 16px;font-size:.92rem}
+.btn.ghost{background:var(--chip);color:var(--text);border:1px solid var(--line)}
+.btn.danger{background:var(--redbg);color:var(--red);border:1px solid rgba(255,80,80,.5)}
+.btn[disabled]{opacity:.55;cursor:not-allowed}
+.ok{margin-top:14px;padding:10px 12px;border-radius:10px;background:rgba(60,200,120,.12);border:1px solid rgba(60,200,120,.5);color:#3cc878;font-size:.92rem}
+.wrap{max-width:760px;margin:0 auto}
+.bar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}
+.bar h3{font-size:1.15rem}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.tk{display:block;width:100%;text-align:start;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;color:var(--text);cursor:pointer}
+.tk:hover{border-color:var(--blue)}
+.tk .l1{display:flex;justify-content:space-between;gap:8px;align-items:center;font-weight:700}
+.tk .l2{color:var(--muted);font-size:.85rem;margin-top:6px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:.75rem;font-weight:800;white-space:nowrap}
+.pill.open{background:rgba(60,200,120,.15);color:#3cc878;border:1px solid rgba(60,200,120,.5)}
+.pill.closed{background:var(--chip);color:var(--muted);border:1px solid var(--line)}
+.empty2{text-align:center;color:var(--muted);padding:30px 10px}
+.bubble{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:12px 14px;margin-bottom:10px;max-width:92%}
+.bubble.staff{background:var(--cyanbg);border-color:rgba(92,200,255,.45);margin-inline-start:auto}
+.bubble .who{font-size:.82rem;color:var(--muted);margin-bottom:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bubble .who b{color:var(--text)}
+.bubble .txt{white-space:pre-wrap;word-break:break-word;line-height:1.5}
+.stag{background:var(--goldbg);color:var(--gold);border:1px solid rgba(255,196,60,.5);border-radius:999px;padding:1px 8px;font-size:.7rem;font-weight:800}
+.fl{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.thumb{max-width:100%;max-height:260px;border-radius:10px;border:1px solid var(--line);display:block;background:var(--input)}
+.pick{margin-top:12px}
+.pick .it{display:flex;justify-content:space-between;gap:8px;align-items:center;padding:6px 10px;margin-top:6px;border:1px solid var(--line);border-radius:8px;font-size:.88rem;word-break:break-all}
+.pick .it button{background:none;border:0;color:var(--red);font-size:1rem;cursor:pointer}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.roles button{cursor:pointer;text-align:center;color:var(--text);font-size:1rem}
+.roles .big{font-size:2rem;margin-bottom:6px}
+.roles small{color:var(--muted);display:block;margin-top:6px}
+.qn{margin-top:18px}
+.qn .ql{font-weight:700;line-height:1.45;margin-bottom:8px;color:var(--text)}
+.qn .ql small{color:var(--muted);font-weight:600}
+.tabbar{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.tabbar button{padding:9px 16px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--muted);font-weight:700;cursor:pointer}
+.tabbar button.on{background:linear-gradient(135deg,#1f6fe0,#2f8bff);color:#fff;border-color:transparent}
+.ans{border-top:1px solid var(--line);padding:12px 0}
+.ans .ql{color:var(--cyan);font-weight:700;margin-bottom:4px}
+.ans .av{white-space:pre-wrap;word-break:break-word}
+.annit{padding:12px;border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+.annit small{color:var(--muted)}
+.annit p{white-space:pre-wrap;margin:4px 0 8px;color:var(--muted)}
+.dropdown .btn.sm{width:100%;display:block;margin-top:6px}
+.upd{white-space:normal}
 </style>
 </head>
 <body>
-
-<!-- GİRİŞ / KAYIT: şu an kapalı -->
-<main class="authwrap" id="auth" hidden>
-  <div class="authcard">
-    <img class="logo" src="/logo.jpg" alt="Yedili Network">
-    <h1 style="font-size:1.7rem">YEDİLİ NETWORK</h1>
-    <div class="tabs">
-      <button type="button" id="tabLogin" class="on">Giriş Yap</button>
-      <button type="button" id="tabReg">Kayıt Ol</button>
-    </div>
-    <form id="authForm">
-      <label for="username">Kullanıcı adı</label>
-      <input id="username" name="username" required maxlength="16" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false">
-      <label for="password">Şifre</label>
-      <input id="password" name="password" type="password" required autocomplete="current-password">
-      <div id="regExtra" hidden>
-        <label for="password2">Şifre tekrar</label>
-        <input id="password2" name="password2" type="password" autocomplete="new-password">
-      </div>
-      <div class="msg" id="authMsg" hidden></div>
-      <button class="btn" type="submit" id="authBtn">Giriş Yap</button>
-    </form>
-  </div>
-</main>
-
-<div id="app" hidden>
+<div id="app">
   <header>
     <div class="nav">
       <a class="brand" href="#/"><img src="/logo.jpg" alt="Yedili Network logo"><span>YEDİLİ <b>NETWORK</b></span></a>
@@ -177,19 +204,20 @@ input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--lin
             <div id="updList"></div>
           </div>
         </div>
+        <button type="button" class="iconbtn" id="loginBtn" hidden>👤</button>
         <div class="umenu" id="umenu" hidden>
           <button type="button" class="iconbtn avatarbtn" id="avBtn"></button>
           <div class="overlay" id="ov" hidden></div>
           <div class="dropdown" id="dd" hidden>
             <div class="dname" id="dName"></div>
-            <button type="button" class="btn" id="logoutBtn">Çıkış Yap</button>
+            <button type="button" class="btn sm ghost" id="pwBtn" data-i18n="changePw"></button>
+            <button type="button" class="btn sm ghost" id="logoutBtn" data-i18n="logout"></button>
           </div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- ANA SAYFA -->
   <main id="page-home">
     <section class="hero">
       <img class="logo" src="/logo.jpg" alt="Yedili Network">
@@ -197,7 +225,6 @@ input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--lin
       <p class="lead" data-i18n="lead"></p>
       <span class="badge"><span data-i18n="version"></span>: 1.21.5x</span>
     </section>
-
     <h2 class="title" data-i18n="howTo"></h2>
     <section class="cards">
       <div class="card">
@@ -212,7 +239,6 @@ input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--lin
         <button type="button" class="btn copy" data-i18n="copy"></button>
       </div>
     </section>
-
     <section class="card dc" style="margin-top:22px">
       <div class="txt">
         <h3>💬 <span data-i18n="dcTitle"></span></h3>
@@ -222,142 +248,97 @@ input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--lin
     </section>
   </main>
 
-  <!-- YETKİLİLER -->
   <main id="page-staff" hidden>
     <h2 class="title" style="margin-top:8px" data-i18n="staffTitle"></h2>
     <section class="staff">
       <div class="card member">
-        <img class="skin" data-skin="MHF_Steve" alt="geckocraft88117">
+        <img class="skin" data-skin="geckocraft88117" alt="geckocraft88117">
         <span class="role kurucu" data-i18n="roleFounder"></span>
         <div class="name">geckocraft88117</div>
       </div>
       <div class="card member">
-        <img class="skin" data-skin="MHF_Alex" alt="Eren_6331">
+        <img class="skin" data-skin="Eren_6331" alt="Eren_6331">
         <span class="role admin" data-i18n="roleAdmin"></span>
         <div class="name">Eren_6331</div>
       </div>
       <div class="card member">
-        <img class="skin" data-skin="MHF_Enderman" alt=".alemdeVENOM">
+        <img class="skin" data-skin=".alemdeVENOM" alt=".alemdeVENOM">
         <span class="role gelistirici" data-i18n="roleDev"></span>
         <div class="name">.alemdeVENOM</div>
       </div>
     </section>
   </main>
 
-  <!-- DESTEK TALEBİ (hazırlanıyor) -->
   <main id="page-support" hidden>
     <h2 class="title" style="margin-top:8px" data-i18n="support"></h2>
-    <section class="card soon">
-      <div class="big">🎫</div>
-      <h3 data-i18n="soon"></h3>
-      <p data-i18n="soonSupport"></p>
-    </section>
+    <div class="wrap" id="supportBody"></div>
   </main>
 
-  <!-- YETKİLİ BAŞVURU (hazırlanıyor) -->
   <main id="page-apply" hidden>
     <h2 class="title" style="margin-top:8px" data-i18n="apply"></h2>
-    <section class="card soon">
-      <div class="big">📝</div>
-      <h3 data-i18n="soon"></h3>
-      <p data-i18n="soonApply"></p>
-    </section>
+    <div class="wrap" id="applyBody"></div>
+  </main>
+
+  <main id="page-panel" hidden>
+    <h2 class="title" style="margin-top:8px">Yetkili Paneli</h2>
+    <div class="wrap" id="panelBody"></div>
   </main>
 
   <footer>© Yedili Network · <a href="https://discord.gg/yrwER5uSF" target="_blank" rel="noopener noreferrer">Discord</a></footer>
 </div>
 
+<script src="/i18n.js"></script>
 <script>
-/* ============ AYARLAR ============ */
-var AUTH_ENABLED = false;   // Giriş/kayıt sistemi: şu an KAPALI. Açmak için true yap.
-var UPDATES = [];           // Duyurular: { date:"25.11.2026", title:"Başlık", text:"Metin" }
-
-var LANGS = [
-  ["tr","Türkçe"],["en-GB","English (British)"],["en-US","English (American)"],["fr","Français"],["de","Deutsch"],
-  ["az","Azərbaycanca"],["ru","Русский"],["ro","Română"],["hi","हिन्दी"],["ar","العربية"]
-];
-
-var T = {
- "tr":{home:"Ana Sayfa",staff:"Yetkililer",support:"Destek Talebi",apply:"Yetkili Başvuru",
-  lead:"Java ve Bedrock oyuncuları birlikte aynı sunucuda oynayabilir. Aşağıdaki bilgilerle hemen bağlan.",version:"Sürüm",howTo:"Nasıl Bağlanılır?",
-  address:"Adres",port:"Port",copy:"Adresi Kopyala",copied:"Kopyalandı!",
-  dcTitle:"Discord Topluluğumuz",dcText:"Discord sunucumuza katıl, duyuruları kaçırma ve diğer oyuncularla tanış.",dcBtn:"Discord'a Katıl",
-  staffTitle:"Yetkililer",roleFounder:"KURUCU",roleAdmin:"ADMİN",roleDev:"GELİŞTİRİCİ",
-  soon:"Çok Yakında",soonSupport:"Destek talebi sistemi hazırlanıyor. Çok yakında buradan talep açabileceksin.",soonApply:"Yetkili başvuruları (Rehber, Moderatör, Asistan) çok yakında burada açılacak.",
-  bell:"Duyurular",noUpdates:"Henüz duyuru yok.",themeDark:"Koyu tema",themeLight:"Açık tema",langLabel:"Dil"},
- "en-GB":{home:"Home",staff:"Staff",support:"Support Ticket",apply:"Staff Application",
-  lead:"Java and Bedrock players can play together on the same server. Connect with the details below.",version:"Version",howTo:"How to Connect",
-  address:"Address",port:"Port",copy:"Copy Address",copied:"Copied!",
-  dcTitle:"Our Discord Community",dcText:"Join our Discord server, never miss an announcement and meet other players.",dcBtn:"Join Discord",
-  staffTitle:"Staff",roleFounder:"FOUNDER",roleAdmin:"ADMIN",roleDev:"DEVELOPER",
-  soon:"Coming Soon",soonSupport:"The support ticket system is being prepared. You will soon be able to open a ticket here.",soonApply:"Staff applications (Guide, Moderator, Assistant) will open here soon.",
-  bell:"Announcements",noUpdates:"No announcements yet.",themeDark:"Dark theme",themeLight:"Light theme",langLabel:"Language"},
- "en-US":{home:"Home",staff:"Staff",support:"Support Ticket",apply:"Staff Application",
-  lead:"Java and Bedrock players can play together on the same server. Connect using the info below.",version:"Version",howTo:"How to Connect",
-  address:"Address",port:"Port",copy:"Copy Address",copied:"Copied!",
-  dcTitle:"Our Discord Community",dcText:"Join our Discord server, don't miss any announcements and meet other players.",dcBtn:"Join Discord",
-  staffTitle:"Staff",roleFounder:"FOUNDER",roleAdmin:"ADMIN",roleDev:"DEVELOPER",
-  soon:"Coming Soon",soonSupport:"The support ticket system is being set up. You'll soon be able to open a ticket here.",soonApply:"Staff applications (Guide, Moderator, Assistant) will open here soon.",
-  bell:"Announcements",noUpdates:"No announcements yet.",themeDark:"Dark theme",themeLight:"Light theme",langLabel:"Language"},
- "fr":{home:"Accueil",staff:"Équipe",support:"Ticket de support",apply:"Candidature staff",
-  lead:"Les joueurs Java et Bedrock peuvent jouer ensemble sur le même serveur. Connecte-toi avec les informations ci-dessous.",version:"Version",howTo:"Comment se connecter ?",
-  address:"Adresse",port:"Port",copy:"Copier l'adresse",copied:"Copié !",
-  dcTitle:"Notre communauté Discord",dcText:"Rejoins notre serveur Discord, ne rate aucune annonce et rencontre d'autres joueurs.",dcBtn:"Rejoindre Discord",
-  staffTitle:"Équipe",roleFounder:"FONDATEUR",roleAdmin:"ADMIN",roleDev:"DÉVELOPPEUR",
-  soon:"Bientôt disponible",soonSupport:"Le système de tickets est en préparation. Tu pourras bientôt ouvrir un ticket ici.",soonApply:"Les candidatures staff (Guide, Modérateur, Assistant) ouvriront bientôt ici.",
-  bell:"Annonces",noUpdates:"Aucune annonce pour le moment.",themeDark:"Thème sombre",themeLight:"Thème clair",langLabel:"Langue"},
- "de":{home:"Startseite",staff:"Team",support:"Support-Ticket",apply:"Team-Bewerbung",
-  lead:"Java- und Bedrock-Spieler können gemeinsam auf demselben Server spielen. Verbinde dich mit den Angaben unten.",version:"Version",howTo:"So verbindest du dich",
-  address:"Adresse",port:"Port",copy:"Adresse kopieren",copied:"Kopiert!",
-  dcTitle:"Unsere Discord-Community",dcText:"Tritt unserem Discord-Server bei, verpasse keine Ankündigung und lerne andere Spieler kennen.",dcBtn:"Discord beitreten",
-  staffTitle:"Team",roleFounder:"GRÜNDER",roleAdmin:"ADMIN",roleDev:"ENTWICKLER",
-  soon:"Demnächst",soonSupport:"Das Ticketsystem wird vorbereitet. Bald kannst du hier ein Ticket erstellen.",soonApply:"Team-Bewerbungen (Guide, Moderator, Assistent) öffnen bald hier.",
-  bell:"Ankündigungen",noUpdates:"Noch keine Ankündigungen.",themeDark:"Dunkles Design",themeLight:"Helles Design",langLabel:"Sprache"},
- "az":{home:"Ana səhifə",staff:"Yetkililər",support:"Dəstək sorğusu",apply:"Yetkili müraciəti",
-  lead:"Java və Bedrock oyunçuları eyni serverdə birlikdə oynaya bilər. Aşağıdakı məlumatlarla qoşul.",version:"Versiya",howTo:"Necə qoşulmaq olar?",
-  address:"Ünvan",port:"Port",copy:"Ünvanı kopyala",copied:"Kopyalandı!",
-  dcTitle:"Discord icmamız",dcText:"Discord serverimizə qoşul, elanları qaçırma və digər oyunçularla tanış ol.",dcBtn:"Discord-a qoşul",
-  staffTitle:"Yetkililər",roleFounder:"QURUCU",roleAdmin:"ADMİN",roleDev:"PROQRAMÇI",
-  soon:"Tezliklə",soonSupport:"Dəstək sorğusu sistemi hazırlanır. Tezliklə buradan sorğu aça biləcəksən.",soonApply:"Yetkili müraciətləri (Bələdçi, Moderator, Assistent) tezliklə burada açılacaq.",
-  bell:"Elanlar",noUpdates:"Hələ elan yoxdur.",themeDark:"Tünd tema",themeLight:"Açıq tema",langLabel:"Dil"},
- "ru":{home:"Главная",staff:"Команда",support:"Обращение в поддержку",apply:"Заявка в персонал",
-  lead:"Игроки Java и Bedrock могут играть вместе на одном сервере. Подключайся по данным ниже.",version:"Версия",howTo:"Как подключиться?",
-  address:"Адрес",port:"Порт",copy:"Скопировать адрес",copied:"Скопировано!",
-  dcTitle:"Наше сообщество в Discord",dcText:"Присоединяйся к нашему Discord-серверу, не пропускай объявления и знакомься с игроками.",dcBtn:"Войти в Discord",
-  staffTitle:"Команда",roleFounder:"ОСНОВАТЕЛЬ",roleAdmin:"АДМИН",roleDev:"РАЗРАБОТЧИК",
-  soon:"Скоро",soonSupport:"Система обращений готовится. Скоро здесь можно будет создать обращение.",soonApply:"Заявки в персонал (Гид, Модератор, Ассистент) скоро откроются здесь.",
-  bell:"Объявления",noUpdates:"Пока нет объявлений.",themeDark:"Тёмная тема",themeLight:"Светлая тема",langLabel:"Язык"},
- "ro":{home:"Acasă",staff:"Echipa",support:"Tichet de suport",apply:"Aplicație staff",
-  lead:"Jucătorii Java și Bedrock pot juca împreună pe același server. Conectează-te cu datele de mai jos.",version:"Versiune",howTo:"Cum te conectezi?",
-  address:"Adresă",port:"Port",copy:"Copiază adresa",copied:"Copiat!",
-  dcTitle:"Comunitatea noastră Discord",dcText:"Intră pe serverul nostru de Discord, nu rata anunțurile și cunoaște alți jucători.",dcBtn:"Intră pe Discord",
-  staffTitle:"Echipa",roleFounder:"FONDATOR",roleAdmin:"ADMIN",roleDev:"DEZVOLTATOR",
-  soon:"În curând",soonSupport:"Sistemul de tichete este în pregătire. În curând vei putea deschide un tichet aici.",soonApply:"Aplicațiile pentru staff (Ghid, Moderator, Asistent) se vor deschide curând aici.",
-  bell:"Anunțuri",noUpdates:"Niciun anunț deocamdată.",themeDark:"Temă întunecată",themeLight:"Temă luminoasă",langLabel:"Limbă"},
- "hi":{home:"होम",staff:"स्टाफ",support:"सपोर्ट टिकट",apply:"स्टाफ आवेदन",
-  lead:"Java और Bedrock खिलाड़ी एक ही सर्वर पर साथ खेल सकते हैं। नीचे दी गई जानकारी से जुड़ें।",version:"संस्करण",howTo:"कैसे जुड़ें?",
-  address:"पता",port:"पोर्ट",copy:"पता कॉपी करें",copied:"कॉपी हो गया!",
-  dcTitle:"हमारी Discord कम्युनिटी",dcText:"हमारे Discord सर्वर से जुड़ें, कोई घोषणा न चूकें और दूसरे खिलाड़ियों से मिलें।",dcBtn:"Discord से जुड़ें",
-  staffTitle:"स्टाफ",roleFounder:"संस्थापक",roleAdmin:"एडमिन",roleDev:"डेवलपर",
-  soon:"जल्द आ रहा है",soonSupport:"सपोर्ट टिकट सिस्टम तैयार हो रहा है। जल्द ही आप यहाँ टिकट खोल सकेंगे।",soonApply:"स्टाफ आवेदन (गाइड, मॉडरेटर, असिस्टेंट) जल्द ही यहाँ खुलेंगे।",
-  bell:"घोषणाएँ",noUpdates:"अभी कोई घोषणा नहीं है।",themeDark:"डार्क थीम",themeLight:"लाइट थीम",langLabel:"भाषा"},
- "ar":{home:"الرئيسية",staff:"الطاقم",support:"تذكرة دعم",apply:"التقديم على الإدارة",
-  lead:"يمكن للاعبي Java وBedrock اللعب معًا على نفس الخادم. اتصل باستخدام المعلومات أدناه.",version:"الإصدار",howTo:"كيف تتصل؟",
-  address:"العنوان",port:"المنفذ",copy:"نسخ العنوان",copied:"تم النسخ!",
-  dcTitle:"مجتمعنا على Discord",dcText:"انضم إلى خادم Discord الخاص بنا ولا تفوّت أي إعلان وتعرّف على اللاعبين.",dcBtn:"انضم إلى Discord",
-  staffTitle:"الطاقم",roleFounder:"المؤسس",roleAdmin:"الأدمن",roleDev:"المطوّر",
-  soon:"قريبًا",soonSupport:"نظام التذاكر قيد التحضير. قريبًا ستتمكن من فتح تذكرة من هنا.",soonApply:"سيُفتح التقديم على الإدارة (مرشد، مشرف، مساعد) قريبًا هنا.",
-  bell:"الإعلانات",noUpdates:"لا توجد إعلانات بعد.",themeDark:"الوضع الداكن",themeLight:"الوضع الفاتح",langLabel:"اللغة"}
-};
-
 /* ============ YARDIMCILAR ============ */
 var $ = function (s) { return document.querySelector(s); };
-function store(k, v) {
-  try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; }
-}
+function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
 function show(el, on) { el.hidden = !on; }
-var lang = "tr";
-function t(k) { return (T[lang] && T[lang][k]) || T.tr[k] || k; }
+function h(tag, p, kids) {
+  var e = document.createElement(tag);
+  p = p || {};
+  Object.keys(p).forEach(function (k) {
+    var v = p[k];
+    if (k === "class") e.className = v;
+    else if (k === "text") e.textContent = v;
+    else if (k === "value") e.value = v;
+    else if (k.slice(0, 2) === "on") e[k] = v;
+    else if (v !== false && v !== null && v !== undefined) e.setAttribute(k, v);
+  });
+  (kids || []).forEach(function (c) { if (c === null || c === undefined) return; e.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+  return e;
+}
+var lang = "tr", me = null, meLoaded = false, pollTimer = null;
+function T_(k, L) { L = L || lang; return (T[L] && T[L][k]) || (T["en-GB"] && T["en-GB"][k]) || T.tr[k] || k; }
+function t(k) { return T_(k, lang); }
+function qt(k, L) { L = L || lang; return (Q[L] && Q[L][k]) || Q["en-GB"][k] || Q.tr[k] || k; }
+function fmt(ms, L) { try { return new Date(ms).toLocaleString(L || lang, { dateStyle: "short", timeStyle: "short" }); } catch (e) { return new Date(ms).toISOString().slice(0, 16); } }
+function left(exp, L) {
+  var ms = exp - Date.now(); if (ms < 0) ms = 0;
+  var hh = Math.floor(ms / 3600000), mm = Math.floor((ms % 3600000) / 60000);
+  return T_("timeLeft", L) + ": " + hh + ":" + (mm < 10 ? "0" : "") + mm;
+}
+function clearPoll() { if (pollTimer) { clearInterval(pollTimer); pollTimer = null; } }
+function call(path, body) {
+  return fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "same-origin", body: JSON.stringify(body) })
+    .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && !!d.ok, d: d, status: r.status }; }); })
+    .catch(function () { return { ok: false, d: { code: "generic" }, status: 0 }; });
+}
+function errMsg(d, L) {
+  var c = d && d.code, k = "e_" + c;
+  return c && T_(k, L) !== k ? T_(k, L) : T_("e_generic", L);
+}
+function lostAuth(r) { if (r.status === 401 || (r.d && r.d.code === "auth")) { me = null; renderBar(); route(true); return true; } return false; }
+function note(el, text, good) { el.textContent = text || ""; el.className = good ? "ok" : "msg"; show(el, !!text); }
+var PLAIN = function (n) { return String(n || "").replace(/^\./, ""); };
+var FALLBACK = "data:image/svg+xml;utf8," + encodeURIComponent(
+  "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'>" +
+  "<rect width='8' height='8' fill='#c58c63'/><rect width='8' height='2' fill='#4a2f1a'/><rect y='2' width='1' height='1' fill='#4a2f1a'/><rect x='7' y='2' width='1' height='1' fill='#4a2f1a'/>" +
+  "<rect x='1' y='4' width='2' height='1' fill='#fff'/><rect x='5' y='4' width='2' height='1' fill='#fff'/><rect x='2' y='4' width='1' height='1' fill='#3a5fcd'/><rect x='5' y='4' width='1' height='1' fill='#3a5fcd'/>" +
+  "<rect x='3' y='5' width='2' height='1' fill='#a8683f'/><rect x='2' y='6' width='4' height='1' fill='#6b3a22'/></svg>");
+function skinImg(img, name, size) {
+  img.src = "https://mc-heads.net/avatar/" + encodeURIComponent(PLAIN(name)) + "/" + size;
+  img.onerror = function () { img.onerror = null; img.src = FALLBACK; };
+}
 
 /* ============ DİL ============ */
 function applyLang() {
@@ -367,16 +348,17 @@ function applyLang() {
   $("#langSel").setAttribute("aria-label", t("langLabel"));
   $("#pageSel").setAttribute("aria-label", t("home"));
   $("#bellBtn").setAttribute("aria-label", t("bell"));
+  $("#loginBtn").title = t("login");
   applyTheme(document.documentElement.getAttribute("data-theme"));
-  renderUpdates();
+  renderBell();
 }
 (function buildLangs() {
   var s = $("#langSel");
-  LANGS.forEach(function (l) { var o = document.createElement("option"); o.value = l[0]; o.textContent = l[1]; s.appendChild(o); });
+  LANGS.forEach(function (l) { s.appendChild(h("option", { value: l[0], text: l[1] })); });
   var saved = store("yn_lang");
-  lang = T[saved] ? saved : "tr";   // varsayılan dil: Türkçe
+  lang = T[saved] ? saved : "tr";
   s.value = lang;
-  s.onchange = function () { lang = s.value; store("yn_lang", lang); applyLang(); };
+  s.onchange = function () { lang = s.value; store("yn_lang", lang); applyLang(); route(true); };
 })();
 
 /* ============ TEMA ============ */
@@ -388,61 +370,29 @@ function applyTheme(th) {
   b.setAttribute("aria-label", b.title);
 }
 (function initTheme() {
-  var saved = store("yn_theme");
-  var th = saved === "light" ? "light" : "dark";
+  var th = store("yn_theme") === "light" ? "light" : "dark";
   document.documentElement.setAttribute("data-theme", th);
   $("#themeBtn").onclick = function () {
     var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    store("yn_theme", next);
-    applyTheme(next);
+    store("yn_theme", next); applyTheme(next);
   };
 })();
 
 /* ============ SAYFALAR ============ */
-var PAGES = { "#/": "page-home", "#/yetkililer": "page-staff", "#/destek": "page-support", "#/basvuru": "page-apply" };
-function route() {
-  var h = PAGES[location.hash] ? location.hash : "#/";
-  Object.keys(PAGES).forEach(function (k) { show($("#" + PAGES[k]), k === h); });
-  $("#pageSel").value = h;
-  window.scrollTo(0, 0);
+var PAGES = { "#/": "page-home", "#/yetkililer": "page-staff", "#/destek": "page-support", "#/basvuru": "page-apply", "#/panel": "page-panel" };
+function route(keep) {
+  clearPoll();
+  var hs = PAGES[location.hash] ? location.hash : "#/";
+  Object.keys(PAGES).forEach(function (k) { show($("#" + PAGES[k]), k === hs); });
+  $("#pageSel").value = hs;
+  if (!keep) window.scrollTo(0, 0);
+  if (hs === "#/destek") renderSupport();
+  else if (hs === "#/basvuru") renderApply();
+  else if (hs === "#/panel") renderPanel();
 }
-window.addEventListener("hashchange", route);
+window.addEventListener("hashchange", function () { route(false); });
 $("#pageSel").onchange = function () { location.hash = $("#pageSel").value; };
-
-/* ============ YETKİLİ KAFALARI (Minecraft skin) ============ */
-var FALLBACK = "data:image/svg+xml;utf8," + encodeURIComponent(
-  "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' shape-rendering='crispEdges'>" +
-  "<rect width='8' height='8' fill='#c58c63'/><rect width='8' height='2' fill='#4a2f1a'/><rect y='2' width='1' height='1' fill='#4a2f1a'/><rect x='7' y='2' width='1' height='1' fill='#4a2f1a'/>" +
-  "<rect x='1' y='4' width='2' height='1' fill='#fff'/><rect x='5' y='4' width='2' height='1' fill='#fff'/><rect x='2' y='4' width='1' height='1' fill='#3a5fcd'/><rect x='5' y='4' width='1' height='1' fill='#3a5fcd'/>" +
-  "<rect x='3' y='5' width='2' height='1' fill='#a8683f'/><rect x='2' y='6' width='4' height='1' fill='#6b3a22'/></svg>");
-document.querySelectorAll("img.skin").forEach(function (img) {
-  img.src = "https://mc-heads.net/avatar/" + encodeURIComponent(img.getAttribute("data-skin")) + "/128";
-  img.onerror = function () { img.onerror = null; img.src = FALLBACK; };
-});
-
-/* ============ DUYURULAR ============ */
-function renderUpdates() {
-  var list = $("#updList");
-  list.textContent = "";
-  if (!UPDATES.length) {
-    var e = document.createElement("div"); e.className = "empty"; e.textContent = t("noUpdates"); list.appendChild(e);
-  } else {
-    UPDATES.forEach(function (u) {
-      var d = document.createElement("div"); d.className = "upd";
-      var s = document.createElement("small"); s.textContent = u.date || "";
-      var b = document.createElement("b"); b.textContent = u.title || "";
-      var p = document.createElement("p"); p.textContent = u.text || "";
-      d.appendChild(s); d.appendChild(b); d.appendChild(p); list.appendChild(d);
-    });
-  }
-  var seen = parseInt(store("yn_seen") || "0", 10) || 0;
-  var unseen = Math.max(0, UPDATES.length - seen);
-  $("#bellDot").textContent = unseen;
-  show($("#bellDot"), unseen > 0);
-}
-function bell(on) { show($("#bellDd"), on); show($("#bellOv"), on); if (on) { store("yn_seen", String(UPDATES.length)); renderUpdates(); } }
-$("#bellBtn").onclick = function () { bell($("#bellDd").hidden); };
-$("#bellOv").onclick = function () { bell(false); };
+document.querySelectorAll("img.skin").forEach(function (img) { skinImg(img, img.getAttribute("data-skin"), 128); });
 
 /* ============ KOPYALA ============ */
 document.querySelectorAll(".copy").forEach(function (b) {
@@ -454,58 +404,433 @@ document.querySelectorAll(".copy").forEach(function (b) {
   };
 });
 
-/* ============ GİRİŞ / KAYIT (AUTH_ENABLED=true olunca çalışır) ============ */
-var me = null, mode = "login", GENERIC = "Bir hata oluştu, tekrar dene";
-function api(body) {
-  return fetch("/api/auth", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
-    .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok && d.ok, d: d }; }); })
-    .catch(function () { return { ok: false, d: { error: GENERIC } }; });
+/* ============ DUYURULAR (zil) ============ */
+var ANN = [];
+function loadBell() {
+  call("/api/app", { action: "bell" }).then(function (r) { if (r.ok) { ANN = r.d.items || []; renderBell(); } });
 }
-function msg(el, text) { el.textContent = text || ""; show(el, !!text); }
-function setMode(m) {
-  mode = m;
-  $("#tabLogin").className = m === "login" ? "on" : "";
-  $("#tabReg").className = m === "register" ? "on" : "";
-  show($("#regExtra"), m === "register");
-  $("#password2").required = m === "register";
-  $("#authBtn").textContent = m === "login" ? "Giriş Yap" : "Kayıt Ol";
-  msg($("#authMsg"), "");
+function seenId() { return parseInt(store("yn_seen") || "0", 10) || 0; }
+function renderBell() {
+  var list = $("#updList"); list.textContent = "";
+  if (!ANN.length) list.appendChild(h("div", { class: "empty", text: t("noUpdates") }));
+  ANN.forEach(function (u) {
+    list.appendChild(h("div", { class: "upd" }, [h("small", { text: fmt(u.at) + " · " + u.author }), h("b", { text: u.title }), h("p", { text: u.body })]));
+  });
+  var seen = seenId(), n = ANN.filter(function (u) { return u.id > seen; }).length;
+  $("#bellDot").textContent = n; show($("#bellDot"), n > 0);
 }
-function renderAuth() {
-  show($("#auth"), AUTH_ENABLED && !me);
-  show($("#app"), !AUTH_ENABLED || !!me);
-  show($("#umenu"), AUTH_ENABLED && !!me);
-  if (AUTH_ENABLED && me) {
+function bell(on) {
+  show($("#bellDd"), on); show($("#bellOv"), on);
+  if (on) { var mx = 0; ANN.forEach(function (u) { if (u.id > mx) mx = u.id; }); if (mx) store("yn_seen", String(mx)); renderBell(); loadBell(); }
+}
+$("#bellBtn").onclick = function () { bell($("#bellDd").hidden); };
+$("#bellOv").onclick = function () { bell(false); };
+
+/* ============ GİRİŞ / HESAP ============ */
+function loadMe(cb) {
+  call("/api/auth", { action: "me" }).then(function (r) {
+    me = r.d && r.d.user ? r.d.user : null;
+    if (me) me.username = String(me.realname).toLowerCase();
+    meLoaded = true; renderBar(); if (cb) cb();
+  });
+}
+function renderBar() {
+  show($("#umenu"), !!me);
+  show($("#loginBtn"), meLoaded && !me);
+  var sel = $("#pageSel"), opt = sel.querySelector('option[value="#/panel"]');
+  if (me && me.staff && !opt) sel.appendChild(h("option", { value: "#/panel", text: T_("panel", "tr") }));
+  if ((!me || !me.staff) && opt) opt.remove();
+  if (opt) opt.textContent = T_("panel", "tr");
+  if (me) {
     $("#dName").textContent = me.realname;
     var b = $("#avBtn"); b.textContent = "";
-    var im = document.createElement("img");
-    im.src = "https://mc-heads.net/avatar/" + encodeURIComponent(me.realname) + "/64"; im.alt = me.realname;
-    im.onerror = function () { im.onerror = null; im.src = FALLBACK; };
-    b.appendChild(im);
+    var im = h("img", { alt: me.realname }); skinImg(im, me.realname, 64); b.appendChild(im);
   }
+  var hs = PAGES[location.hash] ? location.hash : "#/";
+  if (sel.querySelector('option[value="' + hs + '"]')) sel.value = hs;
 }
-if (AUTH_ENABLED) {
-  $("#tabLogin").onclick = function () { setMode("login"); };
-  $("#tabReg").onclick = function () { setMode("register"); };
-  $("#authForm").onsubmit = function (e) {
-    e.preventDefault(); msg($("#authMsg"), "");
-    api({ action: mode, username: $("#username").value, password: $("#password").value, password2: $("#password2").value })
-      .then(function (r) { if (r.ok) { initAuth(); } else { msg($("#authMsg"), r.d.error || GENERIC); } });
+$("#loginBtn").onclick = function () { location.hash = "#/destek"; };
+$("#avBtn").onclick = function () { var o = $("#dd").hidden; show($("#dd"), o); show($("#ov"), o); };
+$("#ov").onclick = function () { show($("#dd"), false); show($("#ov"), false); };
+$("#logoutBtn").onclick = function () {
+  call("/api/auth", { action: "logout" }).then(function () { me = null; show($("#dd"), false); show($("#ov"), false); renderBar(); route(true); });
+};
+$("#pwBtn").onclick = function () { show($("#dd"), false); show($("#ov"), false); pwModal(); };
+
+function field(label, input, hint) { return h("div", {}, [h("label", { text: label }), input, hint ? h("div", { class: "hint", text: hint }) : null]); }
+
+function authCard(box, L) {
+  box.textContent = "";
+  var mode = "login";
+  var tabL = h("button", { type: "button", class: "on", text: T_("login", L) }), tabR = h("button", { type: "button", text: T_("register", L) });
+  var u = h("input", { maxlength: "16", autocomplete: "username", autocapitalize: "none", autocorrect: "off", spellcheck: "false", required: "required" });
+  var p = h("input", { type: "password", required: "required", autocomplete: "current-password" });
+  var p2 = h("input", { type: "password", autocomplete: "new-password" });
+  var extra = h("div", { hidden: "hidden" }, [field(T_("password2", L), p2)]);
+  var hint = h("div", { class: "hint", text: "" });
+  var msg = h("div", { class: "msg", hidden: "hidden" });
+  var btn = h("button", { class: "btn", type: "submit", text: T_("login", L) });
+  function setMode(m) {
+    mode = m; tabL.className = m === "login" ? "on" : ""; tabR.className = m === "register" ? "on" : "";
+    show(extra, m === "register"); p2.required = m === "register"; btn.textContent = T_(m, L);
+    p.autocomplete = m === "login" ? "current-password" : "new-password";
+    hint.textContent = m === "register" ? T_("hintUser", L) + " " + T_("hintPass", L) : ""; note(msg, "");
+  }
+  tabL.onclick = function () { setMode("login"); }; tabR.onclick = function () { setMode("register"); };
+  var form = h("form", { onsubmit: function (e) {
+    e.preventDefault(); note(msg, ""); btn.disabled = true; btn.textContent = T_("wait", L);
+    call("/api/auth", { action: mode, username: u.value, password: p.value, password2: p2.value }).then(function (r) {
+      btn.disabled = false; btn.textContent = T_(mode, L);
+      if (r.ok) loadMe(function () { route(true); }); else note(msg, errMsg(r.d, L));
+    });
+  } }, [field(T_("username", L), u), field(T_("password", L), p), extra, hint, msg, btn]);
+  var card = h("div", { class: "authcard" }, [
+    h("img", { class: "logo", src: "/logo.jpg", alt: "Yedili Network" }),
+    h("p", { class: "lead", style: "margin-top:0", text: T_("needLogin", L) }),
+    h("div", { class: "tabs" }, [tabL, tabR]), form]);
+  box.appendChild(h("div", { class: "authwrap", style: "padding:8px 0" }, [card]));
+}
+function gate(box, L) {
+  if (!meLoaded) { box.textContent = ""; box.appendChild(h("div", { class: "empty2", text: T_("wait", L) })); return false; }
+  if (!me) { authCard(box, L); return false; }
+  return true;
+}
+function pwModal() {
+  var cur = h("input", { type: "password", autocomplete: "current-password", required: "required" });
+  var n1 = h("input", { type: "password", autocomplete: "new-password", required: "required" });
+  var n2 = h("input", { type: "password", autocomplete: "new-password", required: "required" });
+  var msg = h("div", { class: "msg", hidden: "hidden" });
+  var btn = h("button", { class: "btn", type: "submit", text: t("update") });
+  var box = h("div", { class: "authcard" });
+  var modal = h("div", { class: "modal" }, [box]);
+  function close() { modal.remove(); }
+  box.appendChild(h("h3", { text: t("changePw"), style: "margin-bottom:6px" }));
+  box.appendChild(h("form", { onsubmit: function (e) {
+    e.preventDefault(); note(msg, ""); btn.disabled = true;
+    call("/api/auth", { action: "changepw", current: cur.value, password: n1.value, password2: n2.value }).then(function (r) {
+      btn.disabled = false;
+      if (r.ok) { box.textContent = ""; box.appendChild(h("div", { class: "ok", text: t("pwDone") })); box.appendChild(h("button", { class: "btn", type: "button", text: t("ok"), onclick: close })); }
+      else note(msg, errMsg(r.d));
+    });
+  } }, [field(t("current"), cur), field(t("newPw"), n1), field(t("newPw2"), n2), msg, btn,
+    h("button", { class: "btn ghost", type: "button", text: t("cancel"), onclick: close })]));
+  document.body.appendChild(modal);
+}
+
+/* ============ DOSYA SEÇİCİ + YÜKLEME ============ */
+var OK_EXT = { jpg: 1, jpeg: 1, png: 1, webp: 1, gif: 1, mp4: 1, webm: 1, mov: 1 };
+var MIME_EXT = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif", "video/mp4": "mp4", "video/webm": "webm", "video/quicktime": "mov" };
+function extOf(f) {
+  var m = /\.([A-Za-z0-9]+)$/.exec(f.name || ""), e = m ? m[1].toLowerCase() : "";
+  if (OK_EXT[e]) return e;
+  return MIME_EXT[f.type] || "";
+}
+function filePicker(L, holder) {
+  var inp = h("input", { type: "file", multiple: "multiple", hidden: "hidden", accept: "image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime" });
+  var list = h("div"), err = h("div", { class: "msg", hidden: "hidden" });
+  var btn = h("button", { type: "button", class: "btn sm ghost", text: "📎 " + T_("files", L), onclick: function () { inp.click(); } });
+  function draw() {
+    list.textContent = "";
+    holder.forEach(function (f, i) {
+      list.appendChild(h("div", { class: "it" }, [h("span", { text: f.name }), h("button", { type: "button", text: "✕", onclick: function () { holder.splice(i, 1); draw(); } })]));
+    });
+  }
+  inp.onchange = function () {
+    note(err, "");
+    Array.prototype.forEach.call(inp.files, function (f) {
+      if (holder.length >= 5) return note(err, T_("e_count", L));
+      if (!extOf(f)) return note(err, T_("e_type", L));
+      if (f.size > 50 * 1024 * 1024) return note(err, T_("e_toobig", L));
+      holder.push(f);
+    });
+    inp.value = ""; draw();
   };
-  $("#avBtn").onclick = function () { show($("#dd"), $("#dd").hidden); show($("#ov"), !$("#dd").hidden); };
-  $("#ov").onclick = function () { show($("#dd"), false); show($("#ov"), false); };
-  $("#logoutBtn").onclick = function () { api({ action: "logout" }).then(function () { me = null; show($("#dd"), false); show($("#ov"), false); renderAuth(); }); };
+  draw();
+  return h("div", { class: "pick" }, [btn, h("div", { class: "hint", text: T_("filesHint", L) }), inp, list, err]);
 }
-function initAuth() {
-  if (!AUTH_ENABLED) { me = null; renderAuth(); return; }
-  api({ action: "me" }).then(function (r) { me = r.d && r.d.user ? r.d.user : null; renderAuth(); });
+var blobLib = null;
+function loadBlob() {
+  if (!blobLib) blobLib = import("https://esm.sh/@vercel/blob/client").catch(function (e) { blobLib = null; throw e; });
+  return blobLib;
+}
+function uploadAll(files, setStatus, L) {
+  if (!files.length) return Promise.resolve([]);
+  return loadBlob().then(function (lib) {
+    var out = [], chain = Promise.resolve();
+    files.forEach(function (f, i) {
+      chain = chain.then(function () {
+        setStatus(T_("uploading", L) + " " + (i + 1) + "/" + files.length);
+        var path = "tickets/" + me.username + "/" + Date.now().toString(36) + "-" + i + "." + extOf(f);
+        return lib.upload(path, f, { access: "private", handleUploadUrl: "/api/upload", multipart: true, contentType: f.type || undefined })
+          .then(function (b) { out.push({ pathname: b.pathname, name: f.name, size: f.size }); });
+      });
+    });
+    return chain.then(function () { return out; });
+  });
+}
+
+/* ============ DESTEK ============ */
+var sup = { view: "list", id: 0, draft: { category: "account", description: "" }, files: [] };
+function catName(c, L) { return T_("cat" + c.charAt(0).toUpperCase() + c.slice(1), L); }
+var CATS = ["account", "report", "bug", "ban", "suggest", "other"];
+
+function renderSupport() {
+  var box = $("#supportBody");
+  if (!gate(box, lang)) return;
+  box.textContent = "";
+  if (sup.view === "new") return newTicketForm(box);
+  if (sup.view === "ticket") return ticketView(box, sup.id, { L: lang, back: function () { sup.view = "list"; renderSupport(); } });
+  ticketList(box);
+}
+function ticketList(box) {
+  var list = h("div", {});
+  box.appendChild(h("div", { class: "bar" }, [h("h3", { text: t("myTickets") }), h("div", { class: "acts" }, [
+    h("button", { class: "btn sm ghost", type: "button", text: "↻ " + t("refresh"), onclick: function () { renderSupport(); } }),
+    h("button", { class: "btn sm", type: "button", text: "+ " + t("newTicket"), onclick: function () { sup.view = "new"; renderSupport(); } })])]));
+  box.appendChild(list);
+  call("/api/app", { action: "ticket.list" }).then(function (r) {
+    if (lostAuth(r)) return;
+    if (!r.ok) return list.appendChild(h("div", { class: "msg", text: errMsg(r.d) }));
+    if (!r.d.items.length) return list.appendChild(h("div", { class: "empty2", text: t("noTickets") }));
+    r.d.items.forEach(function (x) { list.appendChild(ticketRow(x, lang, function () { sup.view = "ticket"; sup.id = x.id; renderSupport(); })); });
+  });
+}
+function ticketRow(x, L, onclick) {
+  var open = x.status === "open";
+  return h("button", { type: "button", class: "tk", onclick: onclick }, [
+    h("div", { class: "l1" }, [h("span", { text: "#" + x.id + " · " + catName(x.category, L) }), h("span", { class: "pill " + (open ? "open" : "closed"), text: T_(open ? "statusOpen" : "statusClosed", L) })]),
+    h("div", { class: "l2", text: (x.owner ? x.owner + " · " : "") + fmt(x.created, L) + (open ? " · " + left(x.expires, L) : "") })]);
+}
+function newTicketForm(box) {
+  var d = sup.draft;
+  var cat = h("select", { class: "fsel" }, CATS.map(function (c) { return h("option", { value: c, text: catName(c) }); }));
+  cat.value = d.category; cat.onchange = function () { d.category = cat.value; };
+  var desc = h("textarea", { maxlength: "2000", placeholder: t("descHint"), value: d.description });
+  desc.oninput = function () { d.description = desc.value; };
+  var msg = h("div", { class: "msg", hidden: "hidden" });
+  var btn = h("button", { class: "btn", type: "submit", text: t("send") });
+  box.appendChild(h("div", { class: "bar" }, [h("h3", { text: t("newTicket") }), h("button", { class: "btn sm ghost", type: "button", text: "← " + t("back"), onclick: function () { sup.view = "list"; renderSupport(); } })]));
+  box.appendChild(h("form", { class: "card", onsubmit: function (e) {
+    e.preventDefault(); note(msg, "");
+    if (d.description.trim().length < 5) return note(msg, errMsg({ code: "bad_input" }));
+    btn.disabled = true;
+    uploadAll(sup.files, function (s) { btn.textContent = s; }, lang).then(function (files) {
+      btn.textContent = t("wait");
+      return call("/api/app", { action: "ticket.create", category: d.category, description: d.description, files: files });
+    }).then(function (r) {
+      btn.disabled = false; btn.textContent = t("send");
+      if (lostAuth(r)) return;
+      if (!r.ok) return note(msg, errMsg(r.d));
+      sup.draft = { category: "account", description: "" }; sup.files = []; sup.view = "ticket"; sup.id = r.d.id; renderSupport();
+    }).catch(function () { btn.disabled = false; btn.textContent = t("send"); note(msg, t("e_upload")); });
+  } }, [field(t("category"), cat), field(t("description"), desc), filePicker(lang, sup.files), msg, btn]));
+}
+
+function ticketView(box, id, o) {
+  var L = o.L, head = h("div"), msgs = h("div"), foot = h("div"), footState = "", err = h("div", { class: "msg", hidden: "hidden" });
+  var files = [];
+  box.appendChild(h("div", { class: "bar" }, [h("button", { class: "btn sm ghost", type: "button", text: "← " + T_("back", L), onclick: o.back }),
+    h("button", { class: "btn sm ghost", type: "button", text: "↻ " + T_("refresh", L), onclick: function () { load(); } })]));
+  box.appendChild(head); box.appendChild(msgs); box.appendChild(foot); box.appendChild(err);
+  function fileEl(f) {
+    var url = "/api/file?p=" + encodeURIComponent(f.path);
+    if (f.kind === "video") return h("video", { class: "thumb", controls: "controls", preload: "metadata", src: url });
+    return h("a", { href: url, target: "_blank", rel: "noopener" }, [h("img", { class: "thumb", loading: "lazy", src: url, alt: f.name || "" })]);
+  }
+  function buildFoot(open, reason) {
+    foot.textContent = ""; files.length = 0;
+    if (!open) {
+      foot.appendChild(h("div", { class: "card", style: "text-align:center;color:var(--muted)" }, [T_("closedNote", L) + " " + T_(reason === "expired" ? "closedExpired" : "closedManual", L)]));
+      return;
+    }
+    var ta = h("textarea", { maxlength: "2000", placeholder: T_("replyHint", L), style: "min-height:80px" });
+    var btn = h("button", { class: "btn sm", type: "button", text: T_("reply", L) });
+    btn.onclick = function () {
+      note(err, "");
+      if (!ta.value.trim()) return;
+      btn.disabled = true;
+      uploadAll(files, function (s) { btn.textContent = s; }, L).then(function (up) {
+        return call("/api/app", { action: "ticket.reply", id: id, body: ta.value, files: up });
+      }).then(function (r) {
+        btn.disabled = false; btn.textContent = T_("reply", L);
+        if (lostAuth(r)) return;
+        if (!r.ok) { note(err, errMsg(r.d, L)); if (r.d.code === "closed") load(); return; }
+        ta.value = ""; files.length = 0; footState = ""; load();
+      }).catch(function () { btn.disabled = false; btn.textContent = T_("reply", L); note(err, T_("e_upload", L)); });
+    };
+    var cl = h("button", { class: "btn sm danger", type: "button", text: T_("closeTicket", L), onclick: function () {
+      if (!confirm(T_("closeTicket", L) + "?")) return;
+      call("/api/app", { action: "ticket.close", id: id }).then(function (r) { if (!lostAuth(r)) { footState = ""; load(); } });
+    } });
+    foot.appendChild(h("div", { class: "card" }, [ta, filePicker(L, files), h("div", { class: "acts", style: "margin-top:12px" }, [btn, cl])]));
+  }
+  function draw(d) {
+    var tk = d.ticket, open = tk.status === "open";
+    head.textContent = "";
+    head.appendChild(h("div", { class: "card", style: "margin-bottom:14px" }, [
+      h("div", { class: "l1", style: "display:flex;justify-content:space-between;gap:8px;font-weight:800" }, [h("span", { text: T_("ticketNo", L) + " #" + tk.id + " · " + catName(tk.category, L) }), h("span", { class: "pill " + (open ? "open" : "closed"), text: T_(open ? "statusOpen" : "statusClosed", L) })]),
+      h("div", { class: "l2", style: "color:var(--muted);font-size:.85rem;margin-top:6px", text: tk.owner + " · " + fmt(tk.created, L) + (open ? " · " + left(tk.expires, L) : "") })]));
+    msgs.textContent = "";
+    d.messages.forEach(function (m) {
+      var who = h("div", { class: "who" }, [h("b", { text: m.author }), m.staff ? h("span", { class: "stag", text: T_("staffTag", L) }) : null, h("span", { text: fmt(m.at, L) })]);
+      var b = h("div", { class: "bubble" + (m.staff ? " staff" : "") }, [who, h("div", { class: "txt", text: m.body })]);
+      if (m.files.length) b.appendChild(h("div", { class: "fl" }, m.files.map(fileEl)));
+      msgs.appendChild(b);
+    });
+    var st = open ? "open" : "closed:" + tk.reason;
+    if (st !== footState) { footState = st; buildFoot(open, tk.reason); }
+  }
+  function load() {
+    call("/api/app", { action: "ticket.get", id: id }).then(function (r) {
+      if (!box.isConnected) return;
+      if (lostAuth(r)) return;
+      if (!r.ok) return note(err, errMsg(r.d, L));
+      note(err, ""); draw(r.d);
+    });
+  }
+  load();
+  clearPoll();
+  pollTimer = setInterval(function () { if (!box.isConnected) return clearPoll(); if (!document.hidden) load(); }, 20000);
+}
+
+/* ============ YETKİLİ BAŞVURU ============ */
+var ap = { role: "", vals: {}, done: false };
+var ROLE_INFO = { rehber: ["roleRehber", "🧭"], moderator: ["roleMod", "🛡️"], asistan: ["roleAsistan", "🤝"] };
+function renderApply() {
+  var box = $("#applyBody");
+  if (!gate(box, lang)) return;
+  box.textContent = "";
+  if (ap.done) {
+    box.appendChild(h("div", { class: "card", style: "text-align:center" }, [h("div", { class: "ok", text: t("appSent") }),
+      h("button", { class: "btn", type: "button", text: t("back"), onclick: function () { ap = { role: "", vals: {}, done: false }; renderApply(); } })]));
+    return;
+  }
+  if (!ap.role) {
+    box.appendChild(h("h3", { text: t("chooseRole"), style: "text-align:center;margin-bottom:16px" }));
+    var g = h("div", { class: "roles" });
+    Object.keys(ROLE_INFO).forEach(function (r) {
+      g.appendChild(h("button", { type: "button", class: "card", onclick: function () { ap.role = r; ap.vals = {}; renderApply(); window.scrollTo(0, 0); } }, [
+        h("div", { class: "big", text: ROLE_INFO[r][1] }), h("b", { text: t(ROLE_INFO[r][0]) }), h("small", { text: FORMS[r].length + " " + t("qCount") })]));
+    });
+    box.appendChild(g);
+    return;
+  }
+  var keys = FORMS[ap.role], inputs = [];
+  var msg = h("div", { class: "msg", hidden: "hidden" });
+  box.appendChild(h("div", { class: "bar" }, [h("h3", { text: t(ROLE_INFO[ap.role][0]) }), h("button", { class: "btn sm ghost", type: "button", text: "← " + t("back"), onclick: function () { ap.role = ""; renderApply(); } })]));
+  var form = h("form", { class: "card" });
+  keys.forEach(function (k, i) {
+    var short = ["name", "age", "mc", "discord", "hours"].indexOf(k) >= 0;
+    var el = h(short ? "input" : "textarea", { maxlength: short ? "100" : "1500", style: short ? "" : "min-height:90px" });
+    el.value = ap.vals[k] || "";
+    el.oninput = function () { ap.vals[k] = el.value; };
+    inputs.push(el);
+    form.appendChild(h("div", { class: "qn" }, [h("div", { class: "ql" }, [(i + 1) + ". " + qt(k), i === 0 ? h("small", { text: " (" + t("optionalTag") + ")" }) : null]), el]));
+  });
+  var btn = h("button", { class: "btn", type: "submit", text: t("sendApp") });
+  form.appendChild(msg); form.appendChild(btn);
+  form.onsubmit = function (e) {
+    e.preventDefault(); note(msg, "");
+    var answers = keys.map(function (k) { return (ap.vals[k] || "").trim(); });
+    for (var i = 1; i < answers.length; i++) if (!answers[i]) { inputs[i].focus(); return note(msg, t("requiredFill")); }
+    btn.disabled = true;
+    call("/api/app", { action: "app.submit", role: ap.role, answers: answers, lang: lang }).then(function (r) {
+      btn.disabled = false;
+      if (lostAuth(r)) return;
+      if (!r.ok) return note(msg, errMsg(r.d));
+      ap.done = true; renderApply(); window.scrollTo(0, 0);
+    });
+  };
+  box.appendChild(form);
+}
+
+/* ============ YETKİLİ PANELİ (sadece Türkçe) ============ */
+var pn = { tab: "tickets", ticket: 0, app: 0 };
+function renderPanel() {
+  var box = $("#panelBody"), L = "tr";
+  if (!gate(box, L)) return;
+  box.textContent = "";
+  if (!me.staff) return box.appendChild(h("div", { class: "msg", text: "Bu sayfaya erişim yetkin yok." }));
+  var tabs = h("div", { class: "tabbar" }, [["tickets", "🎫 Talepler"], ["apps", "📝 Başvurular"], ["ann", "📢 Duyurular"]].map(function (x) {
+    return h("button", { type: "button", class: pn.tab === x[0] ? "on" : "", text: x[1], onclick: function () { pn.tab = x[0]; pn.ticket = 0; pn.app = 0; renderPanel(); } });
+  }));
+  box.appendChild(tabs);
+  var body = h("div"); box.appendChild(body);
+  if (pn.tab === "tickets") {
+    if (pn.ticket) return ticketView(body, pn.ticket, { L: L, back: function () { pn.ticket = 0; renderPanel(); } });
+    call("/api/app", { action: "ticket.list", scope: "all" }).then(function (r) {
+      if (lostAuth(r)) return;
+      if (!r.ok) return body.appendChild(h("div", { class: "msg", text: errMsg(r.d, L) }));
+      if (!r.d.items.length) return body.appendChild(h("div", { class: "empty2", text: T_("noTickets", L) }));
+      r.d.items.forEach(function (x) { body.appendChild(ticketRow(x, L, function () { pn.ticket = x.id; renderPanel(); })); });
+    });
+  } else if (pn.tab === "apps") {
+    if (pn.app) return appDetail(body, pn.app);
+    call("/api/app", { action: "app.list" }).then(function (r) {
+      if (lostAuth(r)) return;
+      if (!r.ok) return body.appendChild(h("div", { class: "msg", text: errMsg(r.d, L) }));
+      if (!r.d.items.length) return body.appendChild(h("div", { class: "empty2", text: "Henüz başvuru yok." }));
+      r.d.items.forEach(function (x) {
+        body.appendChild(h("button", { type: "button", class: "tk", onclick: function () { pn.app = x.id; renderPanel(); } }, [
+          h("div", { class: "l1" }, [h("span", { text: "#" + x.id + " · " + x.owner }), h("span", { class: "pill open", text: T_(ROLE_INFO[x.role] ? ROLE_INFO[x.role][0] : "apply", L) })]),
+          h("div", { class: "l2", text: fmt(x.at, L) })]));
+      });
+    });
+  } else annPanel(body);
+}
+function appDetail(body, id) {
+  body.appendChild(h("div", { class: "bar" }, [h("button", { class: "btn sm ghost", type: "button", text: "← Geri", onclick: function () { pn.app = 0; renderPanel(); } })]));
+  var card = h("div", { class: "card" }); body.appendChild(card);
+  call("/api/app", { action: "app.get", id: id }).then(function (r) {
+    if (lostAuth(r)) return;
+    if (!r.ok) return card.appendChild(h("div", { class: "msg", text: errMsg(r.d, "tr") }));
+    var it = r.d.item, keys = FORMS[it.role] || [];
+    card.appendChild(h("h3", { text: "#" + it.id + " · " + it.owner + " · " + T_(ROLE_INFO[it.role] ? ROLE_INFO[it.role][0] : "apply", "tr") }));
+    card.appendChild(h("div", { class: "hint", text: fmt(it.at, "tr") + " · Dil: " + it.lang }));
+    keys.forEach(function (k, i) {
+      card.appendChild(h("div", { class: "ans" }, [h("div", { class: "ql", text: (i + 1) + ". " + qt(k, "tr") }), h("div", { class: "av", text: it.answers[i] || "—" })]));
+    });
+  });
+}
+function annPanel(body) {
+  var ti = h("input", { maxlength: "100", placeholder: "Başlık" });
+  var tx = h("textarea", { maxlength: "2000", placeholder: "Duyuru metni" });
+  var msg = h("div", { class: "msg", hidden: "hidden" });
+  var btn = h("button", { class: "btn", type: "submit", text: "Duyuru Yayınla" });
+  var list = h("div", { style: "margin-top:20px" });
+  function refresh() {
+    call("/api/app", { action: "bell" }).then(function (r) {
+      if (!r.ok) return;
+      ANN = r.d.items; renderBell(); list.textContent = "";
+      if (!ANN.length) list.appendChild(h("div", { class: "empty2", text: "Henüz duyuru yok." }));
+      ANN.forEach(function (u) {
+        list.appendChild(h("div", { class: "annit" }, [h("small", { text: fmt(u.at, "tr") + " · " + u.author }), h("b", { text: u.title, style: "display:block" }), h("p", { text: u.body }),
+          h("button", { class: "btn sm danger", type: "button", text: "Sil", onclick: function () {
+            if (!confirm("Bu duyuru silinsin mi?")) return;
+            call("/api/app", { action: "ann.delete", id: u.id }).then(function (r2) { if (!lostAuth(r2)) refresh(); });
+          } })]));
+      });
+    });
+  }
+  body.appendChild(h("form", { class: "card", onsubmit: function (e) {
+    e.preventDefault(); note(msg, "");
+    btn.disabled = true;
+    call("/api/app", { action: "ann.create", title: ti.value, body: tx.value }).then(function (r) {
+      btn.disabled = false;
+      if (lostAuth(r)) return;
+      if (!r.ok) return note(msg, errMsg(r.d, "tr"));
+      ti.value = ""; tx.value = ""; note(msg, "Duyuru yayınlandı.", true); refresh();
+    });
+  } }, [field("Başlık", ti), field("Metin", tx), msg, btn]));
+  body.appendChild(list); refresh();
 }
 
 /* ============ BAŞLAT ============ */
-setMode("login");
 applyLang();
-route();
-initAuth();
+route(false);
+loadBell();
+setInterval(loadBell, 120000);
+loadMe(function () { route(true); });
 </script>
 </body>
 </html>
