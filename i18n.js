@@ -558,3 +558,19 @@ var FORMS = {
   moderator: ["name", "age", "mc", "discord", "hours", "prior", "why_role_moderator", "cheat_see", "argue", "insult", "staffviolate", "contribute", "why_choose_moderator", "friend", "unfair"],
   asistan: ["name", "age", "mc", "discord", "hours", "prior", "why_role_asistan", "welcome", "info", "unknown", "argue", "cheat_suspect", "insult", "rules", "harass", "nomod", "abuse", "team", "ideas", "why_choose_asistan"]
 };
+
+/* Aktif oyuncu sayacı */
+(function () {
+  var P = {
+    "tr": ["Aktif oyuncu", "Sunucu kapalı", "Durum alınamadı"],
+    "en-GB": ["Players online", "Server offline", "Status unavailable"],
+    "fr": ["Joueurs en ligne", "Serveur hors ligne", "Statut indisponible"],
+    "de": ["Spieler online", "Server offline", "Status nicht verfügbar"],
+    "az": ["Aktiv oyunçu", "Server bağlıdır", "Status alınmadı"],
+    "ru": ["Игроков онлайн", "Сервер выключен", "Статус недоступен"],
+    "ro": ["Jucători activi", "Server oprit", "Stare indisponibilă"],
+    "hi": ["ऑनलाइन खिलाड़ी", "सर्वर बंद है", "स्थिति उपलब्ध नहीं"],
+    "ar": ["اللاعبون المتصلون", "الخادم متوقف", "الحالة غير متاحة"]
+  };
+  Object.keys(P).forEach(function (l) { T[l].playersOnline = P[l][0]; T[l].serverOffline = P[l][1]; T[l].statusFail = P[l][2]; });
+})();

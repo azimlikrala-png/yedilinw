@@ -224,6 +224,7 @@ form{text-align:start}
       <h1>YEDİLİ<span class="net">NETWORK</span></h1>
       <p class="lead" data-i18n="lead"></p>
       <span class="badge"><span data-i18n="version"></span>: 1.21.5x</span>
+      <div><span class="badge" id="onlineBadge" style="border-color:#3cc878;color:#3cc878;background:rgba(60,200,120,.1)">…</span></div>
     </section>
     <h2 class="title" data-i18n="howTo"></h2>
     <section class="cards">
@@ -350,7 +351,7 @@ function applyLang() {
   $("#bellBtn").setAttribute("aria-label", t("bell"));
   $("#loginBtn").title = t("login");
   applyTheme(document.documentElement.getAttribute("data-theme"));
-  renderBell();
+  renderBell(); if (typeof renderOnline === "function") renderOnline();
 }
 (function buildLangs() {
   var s = $("#langSel");
@@ -825,10 +826,25 @@ function annPanel(body) {
   body.appendChild(list); refresh();
 }
 
+/* ============ AKTİF OYUNCU ============ */
+var SRV = null;
+function renderOnline() {
+  var b = $("#onlineBadge"); if (!b) return;
+  if (!SRV) b.textContent = "…";
+  else if (!SRV.ok) b.textContent = t("statusFail");
+  else if (!SRV.online) b.textContent = "🔴 " + t("serverOffline");
+  else b.textContent = "🟢 " + t("playersOnline") + ": " + SRV.players + (SRV.max ? " / " + SRV.max : "");
+}
+function loadOnline() {
+  fetch("/api/status").then(function (r) { return r.json(); }).then(function (d) { SRV = d; renderOnline(); }).catch(function () { SRV = { ok: false }; renderOnline(); });
+}
+setInterval(loadOnline, 60000);
+
 /* ============ BAŞLAT ============ */
 applyLang();
 route(false);
 loadBell();
+loadOnline();
 setInterval(loadBell, 120000);
 loadMe(function () { route(true); });
 </script>
