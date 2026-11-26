@@ -574,3 +574,9 @@ var FORMS = {
   };
   Object.keys(P).forEach(function (l) { T[l].playersOnline = P[l][0]; T[l].serverOffline = P[l][1]; T[l].statusFail = P[l][2]; });
 })();
+
+/* Sunucu modları başlığı */
+(function () {
+  var M = { "tr": "Sunucu Modlarımız", "en-GB": "Our Game Modes", "fr": "Nos modes de jeu", "de": "Unsere Spielmodi", "az": "Server rejimlərimiz", "ru": "Наши режимы", "ro": "Modurile noastre de joc", "hi": "हमारे गेम मोड", "ar": "أوضاع اللعب لدينا" };
+  Object.keys(M).forEach(function (l) { T[l].modes = M[l]; });
+})();
