@@ -765,3 +765,22 @@ Q["pt"] = {
 };
 
 LANGS.push(["it", "Italiano"], ["es", "Español"], ["pt", "Português"]);
+
+/* Son giren / çıkan oyuncular */
+(function () {
+  var R = {
+    "tr": ["Son Giren / Çıkan Oyuncular", "Son giren oyuncular", "Son çıkan oyuncular", "Henüz kayıt yok."],
+    "en-GB": ["Recent Players", "Recently joined", "Recently left", "Nothing recorded yet."],
+    "fr": ["Joueurs récents", "Dernières connexions", "Dernières déconnexions", "Rien d'enregistré pour le moment."],
+    "de": ["Letzte Spieler", "Zuletzt beigetreten", "Zuletzt gegangen", "Noch nichts aufgezeichnet."],
+    "az": ["Son oyunçular", "Son daxil olanlar", "Son çıxanlar", "Hələ qeyd yoxdur."],
+    "ru": ["Недавние игроки", "Недавно зашли", "Недавно вышли", "Пока нет записей."],
+    "ro": ["Jucători recenți", "Intrați recent", "Ieșiți recent", "Încă nu există înregistrări."],
+    "hi": ["हाल के खिलाड़ी", "हाल में जुड़े", "हाल में निकले", "अभी कोई रिकॉर्ड नहीं।"],
+    "ar": ["أحدث اللاعبين", "دخلوا مؤخرًا", "خرجوا مؤخرًا", "لا توجد سجلات بعد."],
+    "it": ["Giocatori recenti", "Entrati di recente", "Usciti di recente", "Ancora nessuna registrazione."],
+    "es": ["Jugadores recientes", "Entraron recientemente", "Salieron recientemente", "Aún no hay registros."],
+    "pt": ["Jogadores recentes", "Entraram recentemente", "Saíram recentemente", "Ainda não há registros."]
+  };
+  Object.keys(R).forEach(function (l) { T[l].recentTitle = R[l][0]; T[l].recentJoin = R[l][1]; T[l].recentLeave = R[l][2]; T[l].noPlayers = R[l][3]; });
+})();
