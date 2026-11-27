@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yedili Network | Minecraft Sunucusu</title>
-<link rel="icon" href="/logo.jpg">
+<link rel="icon" href="/logo.png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -30,7 +30,7 @@ a{color:inherit;text-decoration:none}
 header{position:sticky;top:0;z-index:10;background:var(--head);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav{max-width:1000px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 14px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.5px;margin-inline-end:auto}
-.brand img{width:50px;height:44px;border-radius:10px;object-fit:contain;background:#0b1014}
+.brand img{width:52px;height:46px;object-fit:contain}
 .brand span{font-size:1.02rem}
 .brand b{color:var(--cyan)}
 .tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -48,7 +48,7 @@ header{position:sticky;top:0;z-index:10;background:var(--head);backdrop-filter:b
 /* İÇERİK */
 main{flex:1;width:100%;max-width:1000px;margin:0 auto;padding:30px 16px 48px}
 .hero{text-align:center;padding:20px 0 8px}
-.hero .logo{width:190px;height:auto;border-radius:20px;object-fit:contain;background:#0b1014;box-shadow:0 0 40px rgba(47,139,255,.45);margin-bottom:18px}
+.hero .logo{width:190px;height:auto;object-fit:contain;filter:drop-shadow(0 0 22px rgba(47,139,255,.45));margin-bottom:18px}
 h1{font-size:clamp(2rem,7vw,3.2rem);font-weight:900;letter-spacing:1px;line-height:1.1}
 h1 .net{display:block;font-size:.4em;letter-spacing:.55em;color:var(--cyan);margin-top:8px}
 .lead{color:var(--muted);max-width:480px;margin:16px auto 0;line-height:1.6}
@@ -108,7 +108,7 @@ footer a{color:var(--cyan);font-weight:700}
 /* GİRİŞ / KAYIT (şu an kapalı: AUTH_ENABLED=false) */
 .authwrap{display:grid;place-items:center;flex:1;width:100%;padding:24px 16px}
 .authcard{width:100%;max-width:400px;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:18px;padding:26px 22px;box-shadow:0 0 40px var(--glow);text-align:center}
-.authcard .logo{width:120px;height:auto;border-radius:14px;object-fit:contain;background:#0b1014;margin-bottom:12px}
+.authcard .logo{width:120px;height:auto;object-fit:contain;margin-bottom:12px}
 .tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--input);border:1px solid var(--line);border-radius:12px;padding:5px;margin:20px 0 16px}
 .tabs button{padding:10px;background:transparent;color:var(--muted);border:0;border-radius:8px;font-weight:700;cursor:pointer}
 .tabs button.on{background:linear-gradient(135deg,#1f6fe0,#2f8bff);color:#fff}
@@ -180,13 +180,14 @@ form{text-align:start}
 .upd{white-space:normal}
 .modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}.mode{text-align:center;padding:22px 12px}.mode span{display:block;font-size:2rem;margin-bottom:8px}.mode b{font-size:1.05rem;color:var(--cyan)}
 .plist .p{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line)}.plist .p:last-child{border-bottom:0}.plist img{width:32px;height:32px;border-radius:6px;image-rendering:pixelated;background:var(--chip)}.plist .n{flex:1;font-weight:700;word-break:break-all}.plist .w{color:var(--muted);font-size:.8rem;white-space:nowrap}.plist .e{color:var(--muted);padding:10px 0;font-size:.9rem}
+.human{margin-top:14px}.hbtn{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--input);color:var(--text);font-size:1rem;font-weight:600;cursor:pointer;text-align:start}.hbtn.ok{border-color:#3cc878;color:#3cc878}.hbtn[disabled]{cursor:default}.flink{color:var(--cyan);font-weight:600;cursor:pointer}.card.wrap{max-width:560px}
 </style>
 </head>
 <body>
 <div id="app">
   <header>
     <div class="nav">
-      <a class="brand" href="#/"><img src="/logo.jpg" alt="Yedili Network logo"><span>YEDİLİ <b>NETWORK</b></span></a>
+      <a class="brand" href="#/"><img src="/logo.png" alt="Yedili Network logo"><span>YEDİLİ <b>NETWORK</b></span></a>
       <div class="tools">
         <label class="sel has-ic"><span class="ic">📄</span>
           <select id="pageSel">
@@ -212,6 +213,8 @@ form{text-align:start}
           <div class="overlay" id="ov" hidden></div>
           <div class="dropdown" id="dd" hidden>
             <div class="dname" id="dName"></div>
+            <div id="ddEmail" class="hint" style="padding:0 10px 8px;word-break:break-all"></div>
+            <div id="ddAct"></div>
             <button type="button" class="btn sm ghost" id="pwBtn" data-i18n="changePw"></button>
             <button type="button" class="btn sm ghost" id="logoutBtn" data-i18n="logout"></button>
           </div>
@@ -222,7 +225,7 @@ form{text-align:start}
 
   <main id="page-home">
     <section class="hero">
-      <img class="logo" src="/logo.jpg" alt="Yedili Network">
+      <img class="logo" src="/logo.png" alt="Yedili Network">
       <h1>YEDİLİ<span class="net">NETWORK</span></h1>
       <p class="lead" data-i18n="lead"></p>
       <span class="badge"><span data-i18n="version"></span>: 1.21.5x</span>
@@ -242,11 +245,8 @@ form{text-align:start}
         <button type="button" class="btn copy" data-i18n="copy"></button>
       </div>
     </section>
-    <h2 class="title" data-i18n="recentTitle"></h2>
-    <section class="cards">
-      <div class="card"><h3>🟢 <span data-i18n="recentJoin"></span></h3><div id="recJoin" class="plist"></div></div>
-      <div class="card"><h3>🔴 <span data-i18n="recentLeave"></span></h3><div id="recLeave" class="plist"></div></div>
-    </section>
+    <h2 class="title" data-i18n="recentJoin"></h2>
+    <section class="wrap"><div class="card"><div id="recJoin" class="plist"></div></div></section>
 
     <h2 class="title" data-i18n="modes"></h2>
     <section class="modes">
@@ -439,7 +439,7 @@ function renderBell() {
   $("#bellDot").textContent = n; show($("#bellDot"), n > 0);
 }
 function bell(on) {
-  show($("#bellDd"), on); show($("#bellOv"), on);
+  show($("#bellDd"), on); show($("#bellOv"), on); if (on) placeDd($("#bellDd"), $("#bellBtn"));
   if (on) { var mx = 0; ANN.forEach(function (u) { if (u.id > mx) mx = u.id; }); if (mx) store("yn_seen", String(mx)); renderBell(); loadBell(); }
 }
 $("#bellBtn").onclick = function () { bell($("#bellDd").hidden); };
@@ -462,6 +462,11 @@ function renderBar() {
   if (opt) opt.textContent = T_("panel", "tr");
   if (me) {
     $("#dName").textContent = me.realname;
+    $("#ddEmail").textContent = me.email ? "✉ " + me.email + (me.twofa ? "  🔐" : "") : t("noEmailYet");
+    var act = $("#ddAct"); act.textContent = "";
+    function addb(key, fn) { act.appendChild(h("button", { type: "button", class: "btn sm ghost", text: t(key), onclick: function () { show($("#dd"), false); show($("#ov"), false); fn(); } })); }
+    if (!me.email) addb("emailAdd", flowEmailAdd);
+    else { addb("emailChange", flowEmailChange); addb(me.twofa ? "secOff" : "secOn", function () { flowSec(!me.twofa); }); }
     var b = $("#avBtn"); b.textContent = "";
     var im = h("img", { alt: me.realname }); skinImg(im, me.realname, 64); b.appendChild(im);
   }
@@ -477,7 +482,13 @@ $("#loginBtn").onclick = function () {
   document.body.appendChild(modal);
   authCard(inner, lang);
 };
-$("#avBtn").onclick = function () { var o = $("#dd").hidden; show($("#dd"), o); show($("#ov"), o); };
+function placeDd(dd, btn) {
+  if (window.innerWidth <= 700) {
+    var r = btn.getBoundingClientRect();
+    dd.style.cssText = "position:fixed;left:8px;right:8px;top:" + (r.bottom + 8) + "px;max-width:none;max-height:calc(100vh - " + (r.bottom + 24) + "px);overflow-y:auto;min-width:0";
+  } else dd.removeAttribute("style");
+}
+$("#avBtn").onclick = function () { var o = $("#dd").hidden; show($("#dd"), o); show($("#ov"), o); if (o) placeDd($("#dd"), $("#avBtn")); };
 $("#ov").onclick = function () { show($("#dd"), false); show($("#ov"), false); };
 $("#logoutBtn").onclick = function () {
   call("/api/auth", { action: "logout" }).then(function () { me = null; show($("#dd"), false); show($("#ov"), false); renderBar(); route(true); });
@@ -486,40 +497,292 @@ $("#pwBtn").onclick = function () { show($("#dd"), false); show($("#ov"), false)
 
 function field(label, input, hint) { return h("div", {}, [h("label", { text: label }), input, hint ? h("div", { class: "hint", text: hint }) : null]); }
 
+/*SHA_START*/
+var SHA_K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+var SHA_W = new Array(64);
+function shaBlock(H, blk, off) {
+  var W = SHA_W, i;
+  for (i = 0; i < 16; i++) W[i] = (blk[off + 4 * i] << 24) | (blk[off + 4 * i + 1] << 16) | (blk[off + 4 * i + 2] << 8) | blk[off + 4 * i + 3];
+  for (i = 16; i < 64; i++) {
+    var a = W[i - 15], b = W[i - 2];
+    var s0 = ((a >>> 7) | (a << 25)) ^ ((a >>> 18) | (a << 14)) ^ (a >>> 3);
+    var s1 = ((b >>> 17) | (b << 15)) ^ ((b >>> 19) | (b << 13)) ^ (b >>> 10);
+    W[i] = (W[i - 16] + s0 + W[i - 7] + s1) | 0;
+  }
+  var A = H[0], B = H[1], C = H[2], D = H[3], E = H[4], F = H[5], G = H[6], Hh = H[7];
+  for (i = 0; i < 64; i++) {
+    var S1 = ((E >>> 6) | (E << 26)) ^ ((E >>> 11) | (E << 21)) ^ ((E >>> 25) | (E << 7));
+    var ch = (E & F) ^ (~E & G);
+    var t1 = (Hh + S1 + ch + SHA_K[i] + W[i]) | 0;
+    var S0 = ((A >>> 2) | (A << 30)) ^ ((A >>> 13) | (A << 19)) ^ ((A >>> 22) | (A << 10));
+    var mj = (A & B) ^ (A & C) ^ (B & C);
+    var t2 = (S0 + mj) | 0;
+    Hh = G; G = F; F = E; E = (D + t1) | 0; D = C; C = B; B = A; A = (t1 + t2) | 0;
+  }
+  H[0] = (H[0] + A) | 0; H[1] = (H[1] + B) | 0; H[2] = (H[2] + C) | 0; H[3] = (H[3] + D) | 0;
+  H[4] = (H[4] + E) | 0; H[5] = (H[5] + F) | 0; H[6] = (H[6] + G) | 0; H[7] = (H[7] + Hh) | 0;
+}
+var SHA_IV = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+// ilk 32 bitlik kelimeyi döndürür (zorluk kontrolü için yeterli)
+function powFirstWord(bytes) {
+  var H = SHA_IV.slice(), n = bytes.length, total = ((n + 9 + 63) >> 6) << 6, buf = new Uint8Array(total), i;
+  buf.set(bytes); buf[n] = 0x80;
+  var bits = n * 8; buf[total - 4] = (bits >>> 24) & 255; buf[total - 3] = (bits >>> 16) & 255; buf[total - 2] = (bits >>> 8) & 255; buf[total - 1] = bits & 255;
+  for (i = 0; i < total; i += 64) shaBlock(H, buf, i);
+  return H[0] >>> 0;
+}
+function powSolve(token, bits, done, tick) {
+  var enc = new TextEncoder(), pre = enc.encode(token + ":"), n = 0;
+  function step() {
+    var end = Date.now() + 14;
+    while (Date.now() < end) {
+      var nonce = n.toString(36), nb = enc.encode(nonce), m = new Uint8Array(pre.length + nb.length);
+      m.set(pre); m.set(nb, pre.length);
+      if ((powFirstWord(m) >>> (32 - bits)) === 0) return done(nonce);
+      n++;
+    }
+    if (tick) tick(n);
+    setTimeout(step, 0);
+  }
+  step();
+}
+/*SHA_END*/
+
+/* ---- İnsan doğrulaması ---- */
+var tsLoading = null;
+function human(L) {
+  var st = { payload: null, busy: false }, el = h("div", { class: "human" });
+  function draw(state) {
+    el.textContent = "";
+    if (state === "ts") return;
+    var ic = state === "ok" ? "✅" : state === "work" ? "⏳" : "☐";
+    el.appendChild(h("button", { type: "button", class: "hbtn" + (state === "ok" ? " ok" : ""), disabled: state !== "idle" ? "disabled" : false, text: ic + " " + T_(state === "ok" ? "humanOk" : state === "work" ? "humanWorking" : "humanCheck", L), onclick: start }));
+  }
+  function start() {
+    if (st.busy || st.payload) return; st.busy = true; draw("work");
+    call("/api/account", { action: "cap.new" }).then(function (r) {
+      if (!r.ok) { st.busy = false; return draw("idle"); }
+      var c = r.d;
+      if (c.mode === "turnstile") {
+        draw("ts");
+        var box = h("div"); el.appendChild(box);
+        (tsLoading = tsLoading || new Promise(function (ok, bad) { var s = document.createElement("script"); s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"; s.onload = ok; s.onerror = bad; document.head.appendChild(s); })).then(function () {
+          window.turnstile.render(box, { sitekey: c.sitekey, callback: function (tok) { st.payload = { ts: tok }; st.busy = false; draw("ok"); }, "error-callback": function () { st.busy = false; draw("idle"); } });
+        }, function () { st.busy = false; draw("idle"); });
+        return;
+      }
+      powSolve(c.token, c.bits, function (nonce) { st.payload = { token: c.token, nonce: nonce }; st.busy = false; draw("ok"); });
+    });
+  }
+  draw("idle");
+  return { el: el, get: function () { return st.payload; }, reset: function () { st.payload = null; st.busy = false; draw("idle"); } };
+}
+var shortLang = function () { return lang === "tr" ? "tr" : "en"; };
+function acc(body) { return call("/api/account", Object.assign({ lang: shortLang() }, body)); }
+
+/* ---- 6 haneli kod adımı ---- */
+function codeStep(box, o) {
+  box.textContent = "";
+  var L = o.L || lang;
+  var inp = h("input", { inputmode: "numeric", autocomplete: "one-time-code", maxlength: "6", pattern: "[0-9]*", placeholder: "••••••", style: "text-align:center;font-size:1.6rem;letter-spacing:.4em" });
+  var msg = h("div", { class: "msg", hidden: "hidden" });
+  var btn = h("button", { class: "btn", type: "submit", text: T_("confirm", L) });
+  var rs = h("button", { class: "btn ghost", type: "button" });
+  var left_ = 60, timer = null;
+  function tick() { rs.disabled = left_ > 0; rs.textContent = T_("resend", L) + (left_ > 0 ? " (" + left_ + ")" : ""); if (left_ > 0) { left_--; timer = setTimeout(tick, 1000); } }
+  tick();
+  rs.onclick = function () {
+    note(msg, ""); rs.disabled = true;
+    o.resend().then(function (r) { if (r.ok) { left_ = 60; clearTimeout(timer); tick(); note(msg, T_("codeSentTo", L) + " " + (o.to || ""), true); } else { note(msg, errMsg(r.d, L)); left_ = 5; clearTimeout(timer); tick(); } });
+  };
+  box.appendChild(h("p", { class: "lead", style: "margin:0 0 6px", text: T_("codeSentTo", L) + (o.to ? " " + o.to : "") }));
+  box.appendChild(h("form", { onsubmit: function (e) {
+    e.preventDefault(); note(msg, "");
+    if (!/^\d{6}$/.test(inp.value.trim())) return note(msg, T_("e_bad_code", L));
+    btn.disabled = true;
+    o.verify(inp.value.trim()).then(function (r) {
+      btn.disabled = false;
+      if (lostAuth(r)) return;
+      if (!r.ok) { note(msg, errMsg(r.d, L)); return; }
+      clearTimeout(timer); o.done(r.d);
+    });
+  } }, [field(T_("codeLabel", L), inp), msg, btn, rs]));
+  setTimeout(function () { try { inp.focus(); } catch (e) {} }, 50);
+}
+
+/* ---- Giriş / kayıt / şifremi unuttum ---- */
 function authCard(box, L) {
   box.textContent = "";
   var mode = "login";
-  var tabL = h("button", { type: "button", class: "on", text: T_("login", L) }), tabR = h("button", { type: "button", text: T_("register", L) });
-  var u = h("input", { maxlength: "16", autocomplete: "username", autocapitalize: "none", autocorrect: "off", spellcheck: "false", required: "required" });
-  var p = h("input", { type: "password", required: "required", autocomplete: "current-password" });
-  var p2 = h("input", { type: "password", autocomplete: "new-password" });
-  var extra = h("div", { hidden: "hidden" }, [field(T_("password2", L), p2)]);
-  var hint = h("div", { class: "hint", text: "" });
-  var msg = h("div", { class: "msg", hidden: "hidden" });
-  var btn = h("button", { class: "btn", type: "submit", text: T_("login", L) });
-  function setMode(m) {
-    mode = m; tabL.className = m === "login" ? "on" : ""; tabR.className = m === "register" ? "on" : "";
-    show(extra, m === "register"); p2.required = m === "register"; btn.textContent = T_(m, L);
-    p.autocomplete = m === "login" ? "current-password" : "new-password";
-    hint.textContent = m === "register" ? T_("hintUser", L) + " " + T_("hintPass", L) : ""; note(msg, "");
-  }
-  tabL.onclick = function () { setMode("login"); }; tabR.onclick = function () { setMode("register"); };
-  var form = h("form", { onsubmit: function (e) {
-    e.preventDefault(); note(msg, ""); btn.disabled = true; btn.textContent = T_("wait", L);
-    call("/api/auth", { action: mode, username: u.value, password: p.value, password2: p2.value }).then(function (r) {
-      btn.disabled = false; btn.textContent = T_(mode, L);
-      if (r.ok) loadMe(function () {
-        document.querySelectorAll(".loginmodal").forEach(function (m) { m.remove(); });
-        if (location.hash !== "#/" && location.hash !== "") location.hash = "#/"; else route(true);
-      }); else note(msg, errMsg(r.d, L));
-    });
-  } }, [field(T_("username", L), u), field(T_("password", L), p), extra, hint, msg, btn]);
-  var card = h("div", { class: "authcard" }, [
-    h("img", { class: "logo", src: "/logo.jpg", alt: "Yedili Network" }),
-    h("p", { class: "lead", style: "margin-top:0", text: T_("needLogin", L) }),
-    h("div", { class: "tabs" }, [tabL, tabR]), form]);
+  var card = h("div", { class: "authcard" });
   box.appendChild(h("div", { class: "authwrap", style: "padding:8px 0" }, [card]));
+  function head() { card.textContent = ""; card.appendChild(h("img", { class: "logo", src: "/logo.png", alt: "Yedili Network" })); }
+  function finish() {
+    document.querySelectorAll(".loginmodal").forEach(function (m) { m.remove(); });
+    loadMe(function () { if (location.hash !== "#/" && location.hash !== "") location.hash = "#/"; else route(true); });
+  }
+  function main() {
+    head();
+    card.appendChild(h("p", { class: "lead", style: "margin-top:0", text: T_("needLogin", L) }));
+    var tabL = h("button", { type: "button", class: "on", text: T_("login", L) }), tabR = h("button", { type: "button", text: T_("register", L) });
+    var u = h("input", { maxlength: "100", autocomplete: "username", autocapitalize: "none", autocorrect: "off", spellcheck: "false", required: "required" });
+    var em = h("input", { type: "email", maxlength: "100", autocomplete: "email", autocapitalize: "none" });
+    var p = h("input", { type: "password", required: "required", autocomplete: "current-password" });
+    var p2 = h("input", { type: "password", autocomplete: "new-password" });
+    var uF = field(T_("identifier", L), u), emF = field(T_("emailLabel", L), em), p2F = field(T_("password2", L), p2);
+    show(emF, false); show(p2F, false);
+    var hint = h("div", { class: "hint" }), msg = h("div", { class: "msg", hidden: "hidden" });
+    var hm = human(L);
+    var btn = h("button", { class: "btn", type: "submit", text: T_("login", L) });
+    var fg = h("a", { href: "javascript:void(0)", class: "flink", text: T_("forgot", L), onclick: forgot });
+    function setMode(m) {
+      mode = m; tabL.className = m === "login" ? "on" : ""; tabR.className = m === "register" ? "on" : "";
+      uF.firstChild.textContent = T_(m === "login" ? "identifier" : "username", L);
+      show(emF, m === "register"); show(p2F, m === "register"); em.required = m === "register"; p2.required = m === "register";
+      btn.textContent = T_(m, L); show(fg, m === "login");
+      p.autocomplete = m === "login" ? "current-password" : "new-password";
+      hint.textContent = m === "register" ? T_("hintUser", L) + " " + T_("hintPass", L) : ""; note(msg, "");
+    }
+    tabL.onclick = function () { setMode("login"); }; tabR.onclick = function () { setMode("register"); };
+    var form = h("form", { onsubmit: function (e) {
+      e.preventDefault(); note(msg, "");
+      var cap = hm.get(); if (!cap) return note(msg, T_("humanNeed", L));
+      btn.disabled = true; btn.textContent = T_("wait", L);
+      call("/api/auth", { action: mode, username: u.value, email: em.value, password: p.value, password2: p2.value, cap: cap, lang: shortLang() }).then(function (r) {
+        btn.disabled = false; btn.textContent = T_(mode, L); hm.reset();
+        if (r.ok && r.d.need2fa) return twoStep(r.d);
+        if (r.ok) return finish();
+        note(msg, errMsg(r.d, L));
+      });
+    } }, [uF, emF, field(T_("password", L), p), p2F, hint, hm.el, msg, btn, h("div", { style: "text-align:center;margin-top:12px" }, [fg])]);
+    card.appendChild(h("div", { class: "tabs" }, [tabL, tabR])); card.appendChild(form);
+    setMode("login");
+  }
+  function twoStep(d) {
+    head(); card.appendChild(h("h3", { text: "🔐 " + T_("code2fa", L), style: "margin-bottom:10px" }));
+    var inner = h("div"); card.appendChild(inner);
+    codeStep(inner, { L: L, to: d.to,
+      verify: function (code) { return acc({ action: "login2", ticket: d.ticket, code: code }); },
+      resend: function () { return acc({ action: "login2.resend", ticket: d.ticket }); },
+      done: finish });
+    card.appendChild(h("button", { class: "btn ghost", type: "button", text: T_("backLogin", L), onclick: main }));
+  }
+  function forgot() {
+    head(); card.appendChild(h("h3", { text: T_("resetTitle", L), style: "margin-bottom:6px" }));
+    var inner = h("div"); card.appendChild(inner);
+    var em = h("input", { type: "email", maxlength: "100", autocomplete: "email", autocapitalize: "none", required: "required" });
+    var msg = h("div", { class: "msg", hidden: "hidden" }), hm = human(L), btn = h("button", { class: "btn", type: "submit", text: T_("sendCode", L) });
+    inner.appendChild(h("p", { class: "lead", style: "margin:0 0 6px", text: T_("resetEmailHint", L) }));
+    inner.appendChild(h("form", { onsubmit: function (e) {
+      e.preventDefault(); note(msg, "");
+      var cap = hm.get(); if (!cap) return note(msg, T_("humanNeed", L));
+      btn.disabled = true;
+      acc({ action: "forgot.start", email: em.value, cap: cap }).then(function (r) {
+        btn.disabled = false; hm.reset();
+        if (!r.ok) return note(msg, errMsg(r.d, L));
+        var email = em.value.trim();
+        inner.textContent = "";
+        inner.appendChild(h("p", { class: "ok", text: T_("resetSent", L) }));
+        var cs = h("div"); inner.appendChild(cs);
+        codeStep(cs, { L: L, to: "",
+          verify: function (code) { return acc({ action: "forgot.verify", email: email, code: code }); },
+          resend: function () { return acc({ action: "forgot.resend", email: email }); },
+          done: function (d2) { newPass(inner, d2.token); } });
+      });
+    } }, [field(T_("yourEmail", L), em), hm.el, msg, btn]));
+    card.appendChild(h("button", { class: "btn ghost", type: "button", text: T_("backLogin", L), onclick: main }));
+  }
+  function newPass(inner, token) {
+    inner.textContent = "";
+    var un = h("input", { maxlength: "16", autocomplete: "username", autocapitalize: "none", required: "required" });
+    var p1 = h("input", { type: "password", autocomplete: "new-password", required: "required" }), p2 = h("input", { type: "password", autocomplete: "new-password", required: "required" });
+    var msg = h("div", { class: "msg", hidden: "hidden" }), btn = h("button", { class: "btn", type: "submit", text: T_("newPwSet", L) });
+    inner.appendChild(h("form", { onsubmit: function (e) {
+      e.preventDefault(); note(msg, ""); btn.disabled = true;
+      acc({ action: "forgot.finish", token: token, username: un.value, password: p1.value, password2: p2.value }).then(function (r) {
+        btn.disabled = false;
+        if (!r.ok) return note(msg, errMsg(r.d, L));
+        inner.textContent = ""; inner.appendChild(h("div", { class: "ok", text: T_("resetDone", L) }));
+      });
+    } }, [field(T_("usernameFull", L), un), field(T_("newPw", L), p1, T_("hintPass", L)), field(T_("newPw2", L), p2), msg, btn]));
+  }
+  main();
 }
+
+/* ---- Profil: e-posta ve güvenlik sistemi ---- */
+function modal(title) {
+  var box = h("div", { class: "authcard", style: "text-align:start;position:relative" });
+  var m = h("div", { class: "modal loginmodal" }, [h("div", { style: "width:100%;max-width:420px;max-height:92vh;overflow:auto" }, [box])]);
+  function close() { m.remove(); }
+  m.onclick = function (e) { if (e.target === m) close(); };
+  document.body.appendChild(m);
+  var body = h("div");
+  box.appendChild(h("div", { class: "bar", style: "margin-bottom:10px" }, [h("h3", { text: title }), h("button", { type: "button", class: "iconbtn", text: "✕", onclick: close })]));
+  box.appendChild(body);
+  return { body: body, close: close };
+}
+function doneView(m, text) {
+  m.body.textContent = "";
+  m.body.appendChild(h("div", { class: "ok", text: text }));
+  m.body.appendChild(h("button", { class: "btn", type: "button", text: t("ok"), onclick: function () { m.close(); loadMe(function () { route(true); }); } }));
+}
+// bilgi + insan doğrulaması + "kod gönder" ekranı
+function startView(m, o) {
+  m.body.textContent = "";
+  var msg = h("div", { class: "msg", hidden: "hidden" }), hm = human(lang), btn = h("button", { class: "btn", type: "submit", text: t("sendCode") });
+  var em = o.askEmail ? h("input", { type: "email", maxlength: "100", autocomplete: "email", autocapitalize: "none", required: "required" }) : null;
+  m.body.appendChild(h("p", { class: "lead", style: "margin:0 0 10px;text-align:start;white-space:pre-line", text: o.info }));
+  m.body.appendChild(h("form", { onsubmit: function (e) {
+    e.preventDefault(); note(msg, "");
+    var cap = hm.get(); if (!cap) return note(msg, t("humanNeed"));
+    btn.disabled = true;
+    var body = Object.assign({ action: o.action, cap: cap }, em ? { email: em.value } : {}, o.extra || {});
+    acc(body).then(function (r) {
+      btn.disabled = false; hm.reset();
+      if (lostAuth(r)) return m.close();
+      if (!r.ok) return note(msg, errMsg(r.d, lang));
+      o.next(r.d, em ? em.value : "");
+    });
+  } }, [em ? field(t(o.emailLabelKey || "yourEmail"), em) : null, hm.el, msg, btn]));
+}
+function flowEmailAdd() {
+  var m = modal(t("emailAdd"));
+  startView(m, { info: t("emailAddInfo"), askEmail: true, action: "email.start", next: function (d) {
+    var inner = h("div"); m.body.textContent = ""; m.body.appendChild(inner);
+    codeStep(inner, { to: d.to, verify: function (c) { return acc({ action: "email.confirm", code: c }); }, resend: function () { return acc({ action: "code.resend", flow: "emailadd" }); }, done: function () { doneView(m, t("emailAdded")); } });
+  } });
+}
+function flowSec(on) {
+  var m = modal(t(on ? "secOn" : "secOff"));
+  startView(m, { info: t(on ? "secInfo" : "secOffInfo"), action: on ? "twofa.start" : "twofa.off.start", next: function (d) {
+    var inner = h("div"); m.body.textContent = ""; m.body.appendChild(inner);
+    codeStep(inner, { to: d.to, verify: function (c) { return acc({ action: on ? "twofa.confirm" : "twofa.off.confirm", code: c }); }, resend: function () { return acc({ action: "code.resend", flow: on ? "twofa_on" : "twofa_off" }); }, done: function () { doneView(m, t(on ? "secEnabledDone" : "secDisabledDone")); } });
+  } });
+}
+function flowEmailChange() {
+  var m = modal(t("emailChange"));
+  startView(m, { info: t("emailChangeInfo"), action: "chg.start", next: function (d) {
+    var inner = h("div"); m.body.textContent = ""; m.body.appendChild(inner);
+    codeStep(inner, { to: d.to, verify: function (c) { return acc({ action: "chg.verifyold", code: c }); }, resend: function () { return acc({ action: "code.resend", flow: "chg_old" }); },
+      done: function (d2) {
+        var stage = d2.stage;
+        m.body.textContent = "";
+        var em = h("input", { type: "email", maxlength: "100", autocomplete: "email", autocapitalize: "none", required: "required" });
+        var msg = h("div", { class: "msg", hidden: "hidden" }), btn = h("button", { class: "btn", type: "submit", text: t("sendNewCode") });
+        m.body.appendChild(h("form", { onsubmit: function (e) {
+          e.preventDefault(); note(msg, ""); btn.disabled = true;
+          acc({ action: "chg.new", stage: stage, email: em.value }).then(function (r) {
+            btn.disabled = false;
+            if (lostAuth(r)) return m.close();
+            if (!r.ok) return note(msg, errMsg(r.d, lang));
+            var inner2 = h("div"); m.body.textContent = ""; m.body.appendChild(inner2);
+            codeStep(inner2, { to: r.d.to, verify: function (c) { return acc({ action: "chg.confirm", stage: stage, code: c }); }, resend: function () { return acc({ action: "code.resend", flow: "chg_new" }); }, done: function () { doneView(m, t("emailChanged")); } });
+          });
+        } }, [field(t("newEmail"), em), msg, btn]));
+      } });
+  } });
+}
+
 function gate(box, L) {
   if (!meLoaded) { box.textContent = ""; box.appendChild(h("div", { class: "empty2", text: T_("wait", L) })); return false; }
   if (!me) { authCard(box, L); return false; }
@@ -871,7 +1134,7 @@ function fillPlayers(box, list) {
   });
 }
 function renderOnline() {
-  if ($("#recJoin")) { fillPlayers($("#recJoin"), SRV && SRV.joins); fillPlayers($("#recLeave"), SRV && SRV.leaves); }
+  if ($("#recJoin")) fillPlayers($("#recJoin"), SRV && SRV.joins);
   var b = $("#onlineBadge"); if (!b) return;
   if (!SRV) b.textContent = "…";
   else if (!SRV.ok) b.textContent = t("statusFail");

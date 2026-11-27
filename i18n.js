@@ -784,3 +784,45 @@ LANGS.push(["it", "Italiano"], ["es", "Español"], ["pt", "Português"]);
   };
   Object.keys(R).forEach(function (l) { T[l].recentTitle = R[l][0]; T[l].recentJoin = R[l][1]; T[l].recentLeave = R[l][2]; T[l].noPlayers = R[l][3]; });
 })();
+
+/* E-posta, güvenlik sistemi, insan doğrulaması (Türkçe + İngilizce; diğer diller şimdilik İngilizce görünür) */
+T["tr"].recentJoin = "Son Giren Oyuncular";
+Object.assign(T["tr"], {
+  identifier: "Kullanıcı adı veya e-posta", emailLabel: "E-posta", yourEmail: "E-posta adresin", forgot: "Şifremi unuttum", backLogin: "Girişe dön",
+  humanCheck: "Ben robot değilim", humanWorking: "Doğrulanıyor...", humanOk: "Doğrulandı", humanNeed: "Önce insan doğrulamasını tamamla",
+  emailAdd: "E-posta ekle", emailAddInfo: "Hesabına e-posta ekle. Yazdığın adrese 6 haneli bir doğrulama kodu göndereceğiz.",
+  emailChange: "E-posta değiştir", emailChangeInfo: "Güvenlik için önce hesabındaki mevcut e-postaya 6 haneli kod göndereceğiz. Sonra yeni e-postanı yazıp ona da kod göndereceğiz.",
+  newEmail: "Yeni e-posta", sendNewCode: "Yeni e-postaya kod gönder", noEmailYet: "E-posta eklenmemiş",
+  secOn: "Güvenlik sistemini aktif et", secOff: "Güvenlik sistemini kapat",
+  secInfo: "Güvenlik sistemi (2 adımlı doğrulama) nedir?\n\nAçıkken hesabına giriş yaparken kullanıcı adı ve şifrenin yanında e-postana gönderilen 6 haneli kodu da girmen gerekir. Şifren başkasının eline geçse bile hesabına giremez. İstediğin zaman kapatabilirsin.\n\nAktif etmek için e-postana bir kod göndereceğiz.",
+  secOffInfo: "Güvenlik sistemini kapatırsan giriş yaparken kod istenmeyecek. Kapatmak için e-postana bir kod göndereceğiz.",
+  secEnabledDone: "Güvenlik sistemi aktif edildi. Artık girişte e-postana gelen kod istenecek.", secDisabledDone: "Güvenlik sistemi kapatıldı. Girişte kod istenmeyecek.",
+  sendCode: "Kod Gönder", codeSentTo: "6 haneli kod gönderildi:", codeLabel: "6 haneli kod", confirm: "Onayla", resend: "Kodu tekrar gönder", code2fa: "Güvenlik kodu",
+  emailAdded: "E-posta adresin hesabına eklendi.", emailChanged: "E-posta adresin değiştirildi.",
+  resetTitle: "Şifreni sıfırla", resetEmailHint: "Hesabına kayıtlı e-posta adresini yaz.", resetSent: "Bu e-posta bir hesapta kayıtlıysa 6 haneli kod gönderildi.",
+  usernameFull: "Hesabının tam kullanıcı adı", newPwSet: "Yeni şifreyi kaydet", resetDone: "Şifren değiştirildi. Artık yeni şifrenle giriş yapabilirsin.",
+  e_captcha: "İnsan doğrulaması başarısız, tekrar dene", e_bad_email: "Geçerli bir e-posta adresi yaz", e_email_taken: "Bu e-posta başka bir hesapta kullanılıyor",
+  e_no_email: "Önce hesabına e-posta eklemelisin", e_has_email: "Hesabında zaten e-posta var", e_bad_code: "Kod hatalı", e_expired: "Kodun süresi doldu, yeni kod iste",
+  e_attempts: "Çok fazla yanlış kod girdin, yeni kod iste", e_wait: "Biraz bekleyip tekrar dene", e_mail_off: "E-posta sistemi henüz kurulmadı", e_mail_fail: "E-posta gönderilemedi, sonra tekrar dene",
+  e_state: "Bu işlem şu an yapılamaz", e_bad_user_email: "Bu kullanıcı adı bu e-postaya ait değil"
+});
+Object.assign(T["en-GB"], {
+  recentJoin: "Recently Joined Players",
+  identifier: "Username or email", emailLabel: "Email", yourEmail: "Your email address", forgot: "Forgot password", backLogin: "Back to login",
+  humanCheck: "I'm not a robot", humanWorking: "Verifying...", humanOk: "Verified", humanNeed: "Please complete the human check first",
+  emailAdd: "Add email", emailAddInfo: "Add an email to your account. We will send a 6-digit verification code to that address.",
+  emailChange: "Change email", emailChangeInfo: "For security we will first send a 6-digit code to your current email. Then you enter the new email and we send a code to it as well.",
+  newEmail: "New email", sendNewCode: "Send code to new email", noEmailYet: "No email added",
+  secOn: "Enable security system", secOff: "Disable security system",
+  secInfo: "What is the security system (2-step verification)?\n\nWhen it is on, logging in requires the 6-digit code sent to your email in addition to your username and password. Even if someone gets your password, they cannot enter your account. You can turn it off at any time.\n\nTo enable it we will send a code to your email.",
+  secOffInfo: "If you disable the security system, no code will be asked at login. To disable it we will send a code to your email.",
+  secEnabledDone: "Security system enabled. Login will now ask for the code sent to your email.", secDisabledDone: "Security system disabled. Login will not ask for a code.",
+  sendCode: "Send Code", codeSentTo: "6-digit code sent:", codeLabel: "6-digit code", confirm: "Confirm", resend: "Resend code", code2fa: "Security code",
+  emailAdded: "Your email was added to your account.", emailChanged: "Your email was changed.",
+  resetTitle: "Reset your password", resetEmailHint: "Enter the email address registered to your account.", resetSent: "If this email is registered to an account, a 6-digit code has been sent.",
+  usernameFull: "Full username of your account", newPwSet: "Save new password", resetDone: "Your password was changed. You can now log in with the new password.",
+  e_captcha: "Human check failed, try again", e_bad_email: "Enter a valid email address", e_email_taken: "This email is used by another account",
+  e_no_email: "You must add an email to your account first", e_has_email: "Your account already has an email", e_bad_code: "Wrong code", e_expired: "The code expired, request a new one",
+  e_attempts: "Too many wrong codes, request a new one", e_wait: "Please wait a bit and try again", e_mail_off: "The email system is not set up yet", e_mail_fail: "The email could not be sent, try again later",
+  e_state: "This action is not possible right now", e_bad_user_email: "This username does not belong to this email"
+});
