@@ -153,6 +153,9 @@ form{text-align:start}
 .bubble.staff{background:var(--cyanbg);border-color:rgba(92,200,255,.45);margin-inline-start:auto}
 .bubble .who{font-size:.82rem;color:var(--muted);margin-bottom:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .bubble .who b{color:var(--text)}
+.bubble .who img{width:26px;height:26px;border-radius:6px;image-rendering:pixelated}
+.st-accepted{background:rgba(60,200,120,.2);color:#2fb36b}.st-rejected,.st-cancelled{background:rgba(255,90,90,.18);color:#e5484d}
+.nitem{display:block;width:100%;text-align:start;padding:10px 12px;border-radius:10px;border:1px solid var(--cyan);background:var(--cyanbg);color:var(--text);margin-bottom:8px;cursor:pointer;font:inherit}
 .bubble .txt{white-space:pre-wrap;word-break:break-word;line-height:1.5}
 .stag{background:var(--goldbg);color:var(--gold);border:1px solid rgba(255,196,60,.5);border-radius:999px;padding:1px 8px;font-size:.7rem;font-weight:800}
 .fl{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
@@ -336,6 +339,7 @@ function left(exp, L) {
   var hh = Math.floor(ms / 3600000), mm = Math.floor((ms % 3600000) / 60000);
   return T_("timeLeft", L) + ": " + hh + ":" + (mm < 10 ? "0" : "") + mm;
 }
+function hm(exp) { var ms = exp - Date.now(); if (ms < 0) ms = 0; var m = Math.floor((ms % 3600000) / 60000); return Math.floor(ms / 3600000) + ":" + (m < 10 ? "0" : "") + m; }
 function clearPoll() { if (pollTimer) { clearInterval(pollTimer); pollTimer = null; } }
 function call(path, body) {
   return fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "same-origin", body: JSON.stringify(body) })
@@ -424,23 +428,40 @@ document.querySelectorAll(".copy").forEach(function (b) {
 });
 
 /* ============ DUYURULAR (zil) ============ */
-var ANN = [];
+var ANN = [], NOTIFS = [];
 function loadBell() {
   call("/api/app", { action: "bell" }).then(function (r) { if (r.ok) { ANN = r.d.items || []; renderBell(); } });
+  if (me && me.username) call("/api/app", { action: "notif.list" }).then(function (r) { if (r.ok) { NOTIFS = r.d.items || []; renderBell(); } });
 }
 function seenId() { return parseInt(store("yn_seen") || "0", 10) || 0; }
+var NKIND = { ticket_reply: "notifTicket", app_reply: "notifApp", app_accepted: "notifAccepted", app_rejected: "notifRejected" };
+function openNotif(n) {
+  bell(false);
+  if (n.kind === "ticket_reply") { sup.view = "ticket"; sup.id = n.ref; if (location.hash === "#/destek") renderSupport(); else location.hash = "#/destek"; }
+  else { ap.view = "app"; ap.id = n.ref; ap.role = ""; ap.done = false; if (location.hash === "#/basvuru") renderApply(); else location.hash = "#/basvuru"; }
+}
 function renderBell() {
   var list = $("#updList"); list.textContent = "";
-  if (!ANN.length) list.appendChild(h("div", { class: "empty", text: t("noUpdates") }));
+  var mine = (me && me.username) ? NOTIFS : [];
+  mine.forEach(function (n) {
+    if (!NKIND[n.kind]) return;
+    list.appendChild(h("button", { type: "button", class: "nitem", style: n.read ? "opacity:.65" : "", onclick: function () { openNotif(n); } }, [h("small", { text: fmt(n.at), style: "display:block" }), h("b", { text: (n.read ? "" : "● ") + t(NKIND[n.kind]) + " (#" + n.ref + ")" })]));
+  });
+  if (!ANN.length && !mine.length) list.appendChild(h("div", { class: "empty", text: t("noUpdates") }));
   ANN.forEach(function (u) {
     list.appendChild(h("div", { class: "upd" }, [h("small", { text: fmt(u.at) + " · " + u.author }), h("b", { text: u.title }), h("p", { text: u.body })]));
   });
-  var seen = seenId(), n = ANN.filter(function (u) { return u.id > seen; }).length;
+  var seen = seenId(), n = ANN.filter(function (u) { return u.id > seen; }).length + mine.filter(function (x) { return !x.read; }).length;
   $("#bellDot").textContent = n; show($("#bellDot"), n > 0);
 }
 function bell(on) {
   show($("#bellDd"), on); show($("#bellOv"), on); if (on) placeDd($("#bellDd"), $("#bellBtn"));
-  if (on) { var mx = 0; ANN.forEach(function (u) { if (u.id > mx) mx = u.id; }); if (mx) store("yn_seen", String(mx)); renderBell(); loadBell(); }
+  if (on) {
+    var mx = 0; ANN.forEach(function (u) { if (u.id > mx) mx = u.id; }); if (mx) store("yn_seen", String(mx));
+    var had = NOTIFS.some(function (x) { return !x.read; }); renderBell();
+    if (had && me && me.username) call("/api/app", { action: "notif.read" }).then(function () { setTimeout(loadBell, 4000); });
+    else loadBell();
+  }
 }
 $("#bellBtn").onclick = function () { bell($("#bellDd").hidden); };
 $("#bellOv").onclick = function () { bell(false); };
@@ -450,7 +471,7 @@ function loadMe(cb) {
   call("/api/auth", { action: "me" }).then(function (r) {
     me = r.d && r.d.user ? r.d.user : null;
     if (me) me.username = String(me.realname).toLowerCase();
-    meLoaded = true; renderBar(); if (cb) cb();
+    meLoaded = true; renderBar(); NOTIFS = []; loadBell(); if (cb) cb();
   });
 }
 function renderBar() {
@@ -491,7 +512,7 @@ function placeDd(dd, btn) {
 $("#avBtn").onclick = function () { var o = $("#dd").hidden; show($("#dd"), o); show($("#ov"), o); if (o) placeDd($("#dd"), $("#avBtn")); };
 $("#ov").onclick = function () { show($("#dd"), false); show($("#ov"), false); };
 $("#logoutBtn").onclick = function () {
-  call("/api/auth", { action: "logout" }).then(function () { me = null; show($("#dd"), false); show($("#ov"), false); renderBar(); route(true); });
+  call("/api/auth", { action: "logout" }).then(function () { me = null; NOTIFS = []; renderBell(); show($("#dd"), false); show($("#ov"), false); renderBar(); route(true); });
 };
 $("#pwBtn").onclick = function () { show($("#dd"), false); show($("#ov"), false); pwModal(); };
 
@@ -892,7 +913,7 @@ function ticketRow(x, L, onclick) {
   var open = x.status === "open";
   return h("button", { type: "button", class: "tk", onclick: onclick }, [
     h("div", { class: "l1" }, [h("span", { text: "#" + x.id + " · " + catName(x.category, L) }), h("span", { class: "pill " + (open ? "open" : "closed"), text: T_(open ? "statusOpen" : "statusClosed", L) })]),
-    h("div", { class: "l2", text: (x.owner ? x.owner + " · " : "") + fmt(x.created, L) + (open ? " · " + left(x.expires, L) : "") })]);
+    h("div", { class: "l2", text: (x.owner ? x.owner + " · " : "") + fmt(x.created, L) + (open ? " · " + left(x.expires, L) : (x.purge ? " · " + T_("deleteIn", L) + ": " + hm(x.purge) : "")) })]);
 }
 function newTicketForm(box) {
   var d = sup.draft;
@@ -933,7 +954,11 @@ function ticketView(box, id, o) {
   function buildFoot(open, reason) {
     foot.textContent = ""; files.length = 0;
     if (!open) {
-      foot.appendChild(h("div", { class: "card", style: "text-align:center;color:var(--muted)" }, [T_("closedNote", L) + " " + T_(reason === "expired" ? "closedExpired" : "closedManual", L)]));
+      foot.appendChild(h("div", { class: "card", style: "text-align:center;color:var(--muted)" }, [T_("closedNote", L) + " " + T_(reason === "expired" ? "closedExpired" : "closedManual", L),
+        h("div", { class: "acts", style: "margin-top:12px;justify-content:center" }, [h("button", { class: "btn sm danger", type: "button", text: T_("deleteTicket", L), onclick: function () {
+          if (!confirm(T_("deleteTicketAsk", L))) return;
+          call("/api/app", { action: "ticket.delete", id: id }).then(function (r) { if (lostAuth(r)) return; if (!r.ok) return note(err, errMsg(r.d, L)); clearPoll(); o.back(); });
+        } })])]));
       return;
     }
     var ta = h("textarea", { maxlength: "2000", placeholder: T_("replyHint", L), style: "min-height:80px" });
@@ -962,10 +987,11 @@ function ticketView(box, id, o) {
     head.textContent = "";
     head.appendChild(h("div", { class: "card", style: "margin-bottom:14px" }, [
       h("div", { class: "l1", style: "display:flex;justify-content:space-between;gap:8px;font-weight:800" }, [h("span", { text: T_("ticketNo", L) + " #" + tk.id + " · " + catName(tk.category, L) }), h("span", { class: "pill " + (open ? "open" : "closed"), text: T_(open ? "statusOpen" : "statusClosed", L) })]),
-      h("div", { class: "l2", style: "color:var(--muted);font-size:.85rem;margin-top:6px", text: tk.owner + " · " + fmt(tk.created, L) + (open ? " · " + left(tk.expires, L) : "") })]));
+      h("div", { class: "l2", style: "color:var(--muted);font-size:.85rem;margin-top:6px", text: tk.owner + " · " + fmt(tk.created, L) + (open ? " · " + left(tk.expires, L) : (tk.purge ? " · " + T_("deleteIn", L) + ": " + hm(tk.purge) : "")) })]));
     msgs.textContent = "";
     d.messages.forEach(function (m) {
-      var who = h("div", { class: "who" }, [h("b", { text: m.author }), m.staff ? h("span", { class: "stag", text: T_("staffTag", L) }) : null, h("span", { text: fmt(m.at, L) })]);
+      var av = h("img", { alt: "" }); skinImg(av, m.author, 48);
+      var who = h("div", { class: "who" }, [av, h("b", { text: m.author }), m.staff ? h("span", { class: "stag", text: T_("staffTag", L) }) : null, h("span", { text: fmt(m.at, L) })]);
       var b = h("div", { class: "bubble" + (m.staff ? " staff" : "") }, [who, h("div", { class: "txt", text: m.body })]);
       if (m.files.length) b.appendChild(h("div", { class: "fl" }, m.files.map(fileEl)));
       msgs.appendChild(b);
@@ -987,7 +1013,8 @@ function ticketView(box, id, o) {
 }
 
 /* ============ YETKİLİ BAŞVURU ============ */
-var ap = { role: "", vals: {}, done: false };
+var ap = { role: "", vals: {}, done: false, view: "list", id: 0 };
+var ST = { pending: ["stPending", "open"], accepted: ["stAccepted", "st-accepted"], rejected: ["stRejected", "st-rejected"], cancelled: ["stCancelled", "st-cancelled"] };
 var ROLE_INFO = { rehber: ["roleRehber", "🧭"], moderator: ["roleMod", "🛡️"], asistan: ["roleAsistan", "🤝"] };
 function renderApply() {
   var box = $("#applyBody");
@@ -995,9 +1022,10 @@ function renderApply() {
   box.textContent = "";
   if (ap.done) {
     box.appendChild(h("div", { class: "card", style: "text-align:center" }, [h("div", { class: "ok", text: t("appSent") }),
-      h("button", { class: "btn", type: "button", text: t("back"), onclick: function () { ap = { role: "", vals: {}, done: false }; renderApply(); } })]));
+      h("button", { class: "btn", type: "button", text: t("back"), onclick: function () { ap = { role: "", vals: {}, done: false, view: "list", id: 0 }; renderApply(); } })]));
     return;
   }
+  if (ap.view === "app") return appView(box, ap.id, { L: lang, back: function () { ap.view = "list"; renderApply(); } });
   if (!ap.role) {
     box.appendChild(h("h3", { text: t("chooseRole"), style: "text-align:center;margin-bottom:16px" }));
     var g = h("div", { class: "roles" });
@@ -1006,6 +1034,13 @@ function renderApply() {
         h("div", { class: "big", text: ROLE_INFO[r][1] }), h("b", { text: t(ROLE_INFO[r][0]) }), h("small", { text: FORMS[r].length + " " + t("qCount") })]));
     });
     box.appendChild(g);
+    var mine = h("div", { style: "margin-top:26px" }, [h("h3", { text: t("myApps"), style: "margin-bottom:10px" })]); box.appendChild(mine);
+    call("/api/app", { action: "app.mine" }).then(function (r) {
+      if (lostAuth(r) || !box.isConnected) return;
+      if (!r.ok) return mine.appendChild(h("div", { class: "msg", text: errMsg(r.d) }));
+      if (!r.d.items.length) return mine.appendChild(h("div", { class: "empty2", text: t("noApps") }));
+      r.d.items.forEach(function (x) { mine.appendChild(appRow(x, lang, function () { ap.view = "app"; ap.id = x.id; renderApply(); })); });
+    });
     return;
   }
   var keys = FORMS[ap.role], inputs = [];
@@ -1031,7 +1066,7 @@ function renderApply() {
       btn.disabled = false;
       if (lostAuth(r)) return;
       if (!r.ok) return note(msg, errMsg(r.d));
-      ap.done = true; renderApply(); window.scrollTo(0, 0);
+      ap.vals = {}; ap.role = ""; ap.view = "app"; ap.id = r.d.id; renderApply(); window.scrollTo(0, 0);
     });
   };
   box.appendChild(form);
@@ -1064,26 +1099,76 @@ function renderPanel() {
       if (!r.ok) return body.appendChild(h("div", { class: "msg", text: errMsg(r.d, L) }));
       if (!r.d.items.length) return body.appendChild(h("div", { class: "empty2", text: "Henüz başvuru yok." }));
       r.d.items.forEach(function (x) {
-        body.appendChild(h("button", { type: "button", class: "tk", onclick: function () { pn.app = x.id; renderPanel(); } }, [
-          h("div", { class: "l1" }, [h("span", { text: "#" + x.id + " · " + x.owner }), h("span", { class: "pill open", text: T_(ROLE_INFO[x.role] ? ROLE_INFO[x.role][0] : "apply", L) })]),
-          h("div", { class: "l2", text: fmt(x.at, L) })]));
+        body.appendChild(appRow(x, L, function () { pn.app = x.id; renderPanel(); }));
       });
     });
   } else annPanel(body);
 }
-function appDetail(body, id) {
-  body.appendChild(h("div", { class: "bar" }, [h("button", { class: "btn sm ghost", type: "button", text: "← Geri", onclick: function () { pn.app = 0; renderPanel(); } })]));
-  var card = h("div", { class: "card" }); body.appendChild(card);
-  call("/api/app", { action: "app.get", id: id }).then(function (r) {
-    if (lostAuth(r)) return;
-    if (!r.ok) return card.appendChild(h("div", { class: "msg", text: errMsg(r.d, "tr") }));
-    var it = r.d.item, keys = FORMS[it.role] || [];
-    card.appendChild(h("h3", { text: "#" + it.id + " · " + it.owner + " · " + T_(ROLE_INFO[it.role] ? ROLE_INFO[it.role][0] : "apply", "tr") }));
-    card.appendChild(h("div", { class: "hint", text: fmt(it.at, "tr") + " · Dil: " + it.lang }));
-    keys.forEach(function (k, i) {
-      card.appendChild(h("div", { class: "ans" }, [h("div", { class: "ql", text: (i + 1) + ". " + qt(k, "tr") }), h("div", { class: "av", text: it.answers[i] || "—" })]));
+function appRow(x, L, onclick) {
+  var st = ST[x.status] || ST.pending;
+  return h("button", { type: "button", class: "tk", onclick: onclick }, [
+    h("div", { class: "l1" }, [h("span", { text: "#" + x.id + " · " + (x.owner ? x.owner + " · " : "") + T_(ROLE_INFO[x.role] ? ROLE_INFO[x.role][0] : "apply", L) }), h("span", { class: "pill " + st[1], text: T_(st[0], L) })]),
+    h("div", { class: "l2", text: fmt(x.at, L) + (x.purge ? " · " + T_("deleteIn", L) + ": " + hm(x.purge) : "") })]);
+}
+function appDetail(body, id) { appView(body, id, { L: "tr", staff: true, back: function () { pn.app = 0; renderPanel(); } }); }
+// Başvuru ayrıntısı: başvuru sahibi okur (yanıt yazamaz, iptal edebilir); yetkili yanıtlar ve karar verir
+function appView(box, id, o) {
+  var L = o.L, head = h("div"), msgs = h("div"), foot = h("div"), err = h("div", { class: "msg", hidden: "hidden" });
+  box.appendChild(h("div", { class: "bar" }, [h("button", { class: "btn sm ghost", type: "button", text: "← " + T_("back", L), onclick: function () { clearPoll(); o.back(); } }),
+    h("button", { class: "btn sm ghost", type: "button", text: "↻ " + T_("refresh", L), onclick: function () { load(); } })]));
+  box.appendChild(head); box.appendChild(msgs); box.appendChild(foot); box.appendChild(err);
+  var footKey = "";
+  function draw(it) {
+    var st = ST[it.status] || ST.pending, keys = FORMS[it.role] || [];
+    head.textContent = "";
+    var card = h("div", { class: "card", style: "margin-bottom:14px" }, [
+      h("div", { style: "display:flex;justify-content:space-between;gap:8px;font-weight:800" }, [h("span", { text: T_("appNo", L) + " #" + it.id + " · " + (o.staff ? it.owner + " · " : "") + T_(ROLE_INFO[it.role] ? ROLE_INFO[it.role][0] : "apply", L) }), h("span", { class: "pill " + st[1], text: T_(st[0], L) })]),
+      h("div", { class: "hint", text: fmt(it.at, L) + (it.purge ? " · " + T_("deleteIn", L) + ": " + hm(it.purge) : "") })]);
+    keys.forEach(function (k, i) { card.appendChild(h("div", { class: "ans" }, [h("div", { class: "ql", text: (i + 1) + ". " + qt(k, o.staff ? "tr" : L) }), h("div", { class: "av", text: it.answers[i] || "—" })])); });
+    head.appendChild(card);
+    msgs.textContent = "";
+    msgs.appendChild(h("h3", { text: T_("staffReplies", L), style: "margin:6px 0 10px" }));
+    if (!it.messages.length) msgs.appendChild(h("div", { class: "empty2", text: T_("noReplies", L) }));
+    it.messages.forEach(function (m) {
+      var av = h("img", { alt: "" }); skinImg(av, m.author, 48);
+      msgs.appendChild(h("div", { class: "bubble staff" }, [h("div", { class: "who" }, [av, h("b", { text: m.author }), h("span", { class: "stag", text: T_("staffTag", L) }), h("span", { text: fmt(m.at, L) })]), h("div", { class: "txt", text: m.body })]));
     });
-  });
+    var key = it.status + ":" + (o.staff ? 1 : 0);
+    if (key === footKey) return; footKey = key; foot.textContent = "";
+    if (it.status !== "pending") return;
+    if (o.staff) {
+      var ta = h("textarea", { maxlength: "2000", placeholder: T_("replyHint", L), style: "min-height:80px" });
+      function act(action, extra, ask) {
+        if (ask && !confirm(ask)) return;
+        note(err, "");
+        var body = { action: action, id: id }; for (var k in extra) body[k] = extra[k];
+        call("/api/app", body).then(function (r) {
+          if (lostAuth(r)) return;
+          if (!r.ok) { note(err, errMsg(r.d, L)); load(); return; }
+          ta.value = ""; footKey = ""; load();
+        });
+      }
+      foot.appendChild(h("div", { class: "card" }, [ta, h("div", { class: "acts", style: "margin-top:12px" }, [
+        h("button", { class: "btn sm", type: "button", text: T_("reply", L), onclick: function () { if (ta.value.trim()) act("app.reply", { body: ta.value }); } }),
+        h("button", { class: "btn sm", type: "button", text: "✅ Kabul Et", onclick: function () { act("app.decide", { decision: "accepted", note: ta.value }, "Başvuru kabul edilsin mi?"); } }),
+        h("button", { class: "btn sm danger", type: "button", text: "❌ Reddet", onclick: function () { act("app.decide", { decision: "rejected", note: ta.value }, "Başvuru reddedilsin mi?"); } })])]));
+    } else {
+      foot.appendChild(h("div", { class: "acts" }, [h("button", { class: "btn sm danger", type: "button", text: T_("cancelApp", L), onclick: function () {
+        if (!confirm(T_("cancelAppAsk", L))) return;
+        call("/api/app", { action: "app.cancel", id: id }).then(function (r) { if (lostAuth(r)) return; if (!r.ok) return note(err, errMsg(r.d, L)); footKey = ""; load(); });
+      } })]));
+    }
+  }
+  function load() {
+    call("/api/app", { action: "app.get", id: id }).then(function (r) {
+      if (!box.isConnected) return;
+      if (lostAuth(r)) return;
+      if (!r.ok) return note(err, errMsg(r.d, L));
+      note(err, ""); draw(r.d.item);
+    });
+  }
+  load(); clearPoll();
+  pollTimer = setInterval(function () { if (!box.isConnected) return clearPoll(); if (!document.hidden) load(); }, 20000);
 }
 function annPanel(body) {
   var ti = h("input", { maxlength: "100", placeholder: "Başlık" });
@@ -1149,7 +1234,7 @@ setInterval(loadOnline, 60000);
 /* ============ BAŞLAT ============ */
 applyLang();
 route(false);
-loadBell();
+loadBell(); setInterval(function () { if (!document.hidden) loadBell(); }, 60000);
 loadOnline();
 setInterval(loadBell, 120000);
 loadMe(function () { route(true); });

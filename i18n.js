@@ -826,3 +826,19 @@ Object.assign(T["en-GB"], {
   e_attempts: "Too many wrong codes, request a new one", e_wait: "Please wait a bit and try again", e_mail_off: "The email system is not set up yet", e_mail_fail: "The email could not be sent, try again later",
   e_state: "This action is not possible right now", e_bad_user_email: "This username does not belong to this email"
 });
+Object.assign(T["tr"], {
+  myApps: "Başvurularım", newApp: "Yeni Başvuru", noApps: "Henüz başvurun yok.", appNo: "Başvuru",
+  stPending: "Beklemede", stAccepted: "Kabul edildi", stRejected: "Reddedildi", stCancelled: "İptal edildi",
+  cancelApp: "Başvuruyu iptal et", cancelAppAsk: "Başvurun iptal edilsin mi?", noReplies: "Henüz yetkili yanıtı yok.", staffReplies: "Yetkili yanıtları",
+  deleteIn: "Otomatik silinmeye kalan", deleteTicket: "Talebi sil", deleteTicketAsk: "Bu talep kalıcı olarak silinsin mi?",
+  notifTicket: "Talebinize yanıt geldi", notifApp: "Başvurunuza yanıt geldi", notifAccepted: "Başvurunuz kabul edildi", notifRejected: "Başvurunuz reddedildi",
+  yourAnswers: "Cevapların", e_already: "Bu rol için son 7 günde zaten başvurdun"
+});
+Object.assign(T["en-GB"], {
+  myApps: "My applications", newApp: "New application", noApps: "You have no applications yet.", appNo: "Application",
+  stPending: "Pending", stAccepted: "Accepted", stRejected: "Rejected", stCancelled: "Cancelled",
+  cancelApp: "Cancel application", cancelAppAsk: "Cancel your application?", noReplies: "No staff reply yet.", staffReplies: "Staff replies",
+  deleteIn: "Time until automatic deletion", deleteTicket: "Delete ticket", deleteTicketAsk: "Delete this ticket permanently?",
+  notifTicket: "Your ticket has a reply", notifApp: "Your application has a reply", notifAccepted: "Your application was accepted", notifRejected: "Your application was rejected",
+  yourAnswers: "Your answers", e_already: "You already applied for this role in the last 7 days"
+});
